@@ -1,0 +1,49 @@
+{
+  "name": "optimistdigital/nova-page-manager",
+  "description": "Page(s) and region(s) manager for Laravel Nova.",
+  "keywords": [
+    "laravel",
+    "nova",
+    "page",
+    "manager",
+    "optimistdigital"
+  ],
+  "authors": [
+    {
+      "name": "Tarvo Reinpalu",
+      "email": "tarvoreinpalu@gmail.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Optimist Digital",
+      "email": "info@optimistdigital.com",
+      "role": "Maintainer"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1.0",
+    "optimistdigital/nova-locale-field": "^1.1.1",
+    "doctrine/dbal": "^2.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "OptimistDigital\\NovaPageManager\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "OptimistDigital\\NovaPageManager\\ToolServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
