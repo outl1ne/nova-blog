@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateRegionAndPagesTables extends Migration
+class CreateRegionAndPostsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,9 @@ class CreateRegionAndPagesTables extends Migration
      */
     public function up()
     {
-        $tableName = config('nova-page-manager.table', 'nova_page_manager');
+        $tableName = config('nova-blog.table', 'nova_blog');
         $regionsTableName = $tableName . '_regions';
-        $pagesTableName = $tableName . '_pages';
+        $postsTableName = $tableName . '_posts';
 
         // Create regions table
         Schema::create($regionsTableName, function (Blueprint $table) {
@@ -46,11 +46,11 @@ class CreateRegionAndPagesTables extends Migration
             DB::table($tableName)->where('id', $region->id)->delete();
         });
 
-        // Rename pages table
-        Schema::rename($tableName, $pagesTableName);
+        // Rename posts table
+        Schema::rename($tableName, $postsTableName);
 
         // Drop deprecated type column
-        Schema::table($pagesTableName, function ($table) {
+        Schema::table($postsTableName, function ($table) {
             $table->dropColumn('type');
         });
     }
@@ -62,14 +62,14 @@ class CreateRegionAndPagesTables extends Migration
      */
     public function down()
     {
-        $tableName = config('nova-page-manager.table', 'nova_page_manager');
+        $tableName = config('nova-blog.table', 'nova_blog');
         $regionsTableName = $tableName . '_regions';
-        $pagesTableName = $tableName . '_pages';
+        $postsTableName = $tableName . '_posts';
 
         // Not worth the effort to undo the massive amount of changes in "up"
         // as there's no usecase to undoing just this migration
 
         Schema::dropIfExists($regionsTableName);
-        Schema::dropIfExists($pagesTableName);
+        Schema::dropIfExists($postsTableName);
     }
 }

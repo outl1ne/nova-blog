@@ -12,11 +12,11 @@ class MakeSlugLocalePairUnique extends Migration
      */
     public function up()
     {
-        $tableName = config('nova-page-manager.table', 'nova_page_manager');
-        $pagesTableName = $tableName . '_pages';
+        $tableName = config('nova-blog.table', 'nova_blog');
+        $postsTableName = $tableName . '_posts';
 
-        Schema::table($pagesTableName, function ($table) {
-            $table->dropUnique('nova_page_manager_slug_unique');
+        Schema::table($postsTableName, function ($table) {
+            $table->dropUnique('nova_blog_slug_unique');
             $table->unique(['locale', 'slug']);
         });
     }
@@ -28,10 +28,10 @@ class MakeSlugLocalePairUnique extends Migration
      */
     public function down()
     {
-        $tableName = config('nova-page-manager.table', 'nova_page_manager');
-        $pagesTableName = $tableName . '_pages';
+        $tableName = config('nova-blog.table', 'nova_blog');
+        $postsTableName = $tableName . '_posts';
 
-        Schema::table($pagesTableName, function ($table) {
+        Schema::table($postsTableName, function ($table) {
             $table->dropUnique(['locale', 'slug']);
             $table->unique('slug');
         });

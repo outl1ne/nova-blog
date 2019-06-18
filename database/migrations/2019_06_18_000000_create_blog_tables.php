@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePageManagerTables extends Migration
+class CreateBlogTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePageManagerTables extends Migration
      */
     public function up()
     {
-        $table = config('nova-page-manager.table', 'nova_page_manager');
+        $table = config('nova-blog.table', 'nova_blog');
 
         Schema::create($table, function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -40,7 +40,7 @@ class CreatePageManagerTables extends Migration
      */
     public function down()
     {
-        $table = config('nova-page-manager.table', 'nova_page_manager');
+        $table = config('nova-blog.table', 'nova_blog');
 
         Schema::dropIfExists($table);
     }

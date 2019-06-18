@@ -1,10 +1,10 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Nova\Fields;
+namespace OptimistDigital\NovaBlog\Nova\Fields;
 
 use Laravel\Nova\Fields\Field;
-use OptimistDigital\NovaPageManager\NovaPageManager;
-use OptimistDigital\NovaPageManager\Models\Region;
+use OptimistDigital\NovaBlog\NovaBlog;
+use OptimistDigital\NovaBlog\Models\Region;
 
 class RegionField extends Field
 {
@@ -27,7 +27,7 @@ class RegionField extends Field
             'existingRegions' => Region::whereNull('locale_parent_id')->get()->pluck('template', 'id'),
         ]);
 
-        $regionsTableName = NovaPageManager::getRegionsTableName();
+        $regionsTableName = NovaBlog::getRegionsTableName();
         $locale = request()->get('locale');
         $this->rules('required', "unique:$regionsTableName,template,{{resourceId}},id,locale,$locale");
     }
@@ -38,7 +38,7 @@ class RegionField extends Field
             return [$region->template];
         }
 
-        return collect(NovaPageManager::getRegionTemplates())
+        return collect(NovaBlog::getRegionTemplates())
             ->filter(function ($template) {
                 return !Region::where('template', $template::$name)->exists();
             })

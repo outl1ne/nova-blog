@@ -1,11 +1,11 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager;
+namespace OptimistDigital\NovaBlog;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
-class NovaPageManager extends Tool
+class NovaBlog extends Tool
 {
     private static $templates = [];
     private static $locales = [];
@@ -17,7 +17,7 @@ class NovaPageManager extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-page-manager', __DIR__ . '/../dist/js/page-manager-tool.js');
+        Nova::script('nova-blog', __DIR__ . '/../dist/js/blog-tool.js');
         Nova::script('nova-template-field', __DIR__ . '/../dist/js/template-field.js');
         Nova::script('nova-parent-field', __DIR__ . '/../dist/js/parent-field.js');
         Nova::script('nova-region-field', __DIR__ . '/../dist/js/region-field.js');
@@ -30,7 +30,7 @@ class NovaPageManager extends Tool
      */
     public function renderNavigation()
     {
-        return view('nova-page-manager::navigation');
+        return view('nova-blog::navigation');
     }
 
     public static function configure(array $data = [])
@@ -46,10 +46,10 @@ class NovaPageManager extends Tool
         });
     }
 
-    public static function getPageTemplates(): array
+    public static function getPostTemplates(): array
     {
         return array_filter(self::getTemplates(), function ($template) {
-            return $template::$type === 'page';
+            return $template::$type === 'post';
         });
     }
 
@@ -65,13 +65,13 @@ class NovaPageManager extends Tool
         return self::$locales;
     }
 
-    public static function getPagesTableName(): string
+    public static function getPostsTableName(): string
     {
-        return config('nova-page-manager.table', 'nova_page_manager') . '_pages';
+        return config('nova-blog.table', 'nova_blog') . '_posts';
     }
 
     public static function getRegionsTableName(): string
     {
-        return config('nova-page-manager.table', 'nova_page_manager') . '_regions';
+        return config('nova-blog.table', 'nova_blog') . '_regions';
     }
 }

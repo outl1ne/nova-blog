@@ -21,19 +21,19 @@ This [Laravel Nova](https://nova.laravel.com) package allows you to create and m
 Install the package in a Laravel Nova project via Composer:
 
 ```bash
-composer require optimistdigital/nova-page-manager
+composer require optimistdigital/nova-blog
 ```
 
-Publish the `nova-page-manager` configuration file and edit it to your preference:
+Publish the `nova-blog` configuration file and edit it to your preference:
 
 ```bash
-php artisan vendor:publish --provider="OptimistDigital\NovaPageManager\ToolServiceProvider" --tag="config"
+php artisan vendor:publish --provider="OptimistDigital\NovaBlog\ToolServiceProvider" --tag="config"
 ```
 
 Publish the database migration(s) and run migrate:
 
 ```bash
-php artisan vendor:publish --provider="OptimistDigital\NovaPageManager\ToolServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="OptimistDigital\NovaBlog\ToolServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 
@@ -46,7 +46,7 @@ public function tools()
 {
     return [
         // ...
-        new \OptimistDigital\NovaPageManager\NovaPageManager
+        new \OptimistDigital\NovaBlog\NovaBlog
     ];
 }
 ```
@@ -88,7 +88,7 @@ public function fields(Request $request): array
 
 ### Registering templates
 
-All your templates have to be registered using the `NovaPageManager::configure()` function, preferably in `NovaServiceProvider`'s `boot()` function.
+All your templates have to be registered using the `NovaBlog::configure()` function, preferably in `NovaServiceProvider`'s `boot()` function.
 
 Example:
 
@@ -97,7 +97,7 @@ Example:
 
 public function boot()
 {
-    \OptimistDigital\NovaPageManager\NovaPageManager::configure([
+    \OptimistDigital\NovaBlog\NovaBlog::configure([
         'templates' => [
             \App\Nova\Templates\HomePageTemplate::class
         ],
@@ -108,7 +108,7 @@ public function boot()
 
 ### Defining locales
 
-Locales can be defined similarly to how templates are registered. Pass the dictionary of languages to the `NovaPageManager::configure()` function.
+Locales can be defined similarly to how templates are registered. Pass the dictionary of languages to the `NovaBlog::configure()` function.
 
 Example:
 
@@ -117,7 +117,7 @@ Example:
 
 public function boot()
 {
-    \OptimistDigital\NovaPageManager\NovaPageManager::configure([
+    \OptimistDigital\NovaBlog\NovaBlog::configure([
         'templates' => [],
         'locales' => [
             'en_US' => 'English',
@@ -129,7 +129,7 @@ public function boot()
 
 ### Overwrite package resources
 
-You can overwrite the package resources (Page & Region) by setting the config options in `nova-page-manager.php`.
+You can overwrite the package resources (Page & Region) by setting the config options in `nova-blog.php`.
 
 Note: If you create your resources under `App\Nova` namespace, to avoid key duplication you must manually register all other resources in the `NovaServiceProvider`. See [Registering resources](https://nova.laravel.com/docs/2.0/resources/#registering-resources)
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Nova\Fields;
+namespace OptimistDigital\NovaBlog\Nova\Fields;
 
 use Laravel\Nova\Fields\Field;
-use OptimistDigital\NovaPageManager\Models\Page;
+use OptimistDigital\NovaBlog\Models\Post;
 
 class ParentField extends Field
 {
@@ -28,11 +28,11 @@ class ParentField extends Field
 
         $options = [];
 
-        Page
+        Post
             ::whereNull('locale_parent_id')
             ->get()
-            ->each(function ($page) use (&$options) {
-                $options[$page->id] = $page->name . ' (' . $page->slug . ')';
+            ->each(function ($post) use (&$options) {
+                $options[$post->id] = $post->name . ' (' . $post->slug . ')';
             });
 
         $this->withMeta([
@@ -51,9 +51,9 @@ class ParentField extends Field
         $options = $this->meta['options'];
 
         if (isset($resource->id)) {
-            $excluded = $this->findExcludedChildAndParentPages($resource);
-            $excludedIds = array_map(function ($page) {
-                return $page['id'];
+            $excluded = $this->findExcludedChildAndParentPosts($resource);
+            $excludedIds = array_map(function ($post) {
+                return $post['id'];
             }, $excluded);
 
             $options = array_filter(
@@ -67,10 +67,10 @@ class ParentField extends Field
 
         $parent = null;
         if (isset($resource->parent_id)) {
-            $parentPage = Page::find($resource->parent_id);
+            $parentPost = Post::find($resource->parent_id);
             $parent = [
-                'name' => $parentPage->name,
-                'slug' => $parentPage->slug,
+                'name' => $parentPost->name,
+                'slug' => $parentPost->slug,
             ];
         }
 
@@ -81,27 +81,27 @@ class ParentField extends Field
         ]);
     }
 
-    public function findExcludedChildAndParentPages($page)
+    public function findExcludedChildAndParentPosts($post)
     {
-        // Always exclude the current page as being your own parent is a paradox
-        $childrenAndParents = [$page];
+        // Always exclude the current post as being your own parent is a paradox
+        $childrenAndParents = [$post];
 
         // All parent's parents
-        if (isset($page->parent_id)) {
-            $_current = Page::find($page->parent_id);
+        if (isset($post->parent_id)) {
+            $_current = Post::find($post->parent_id);
             while (isset($_current->parent_id)) {
-                $_current = Page::find($_current->parent_id);
+                $_current = Post::find($_current->parent_id);
                 $childrenAndParents[] = $_current;
             }
         }
 
         // All children
-        $childPages = Page::where('parent_id', $page->id)->get();
+        $childPosts = Post::where('parent_id', $post->id)->get();
 
-        while (sizeof($childPages) > 0) {
-            $childrenAndParents = array_merge($childrenAndParents, $childPages->toArray());
-            $childPages = Page::whereIn('parent_id', $childPages->map(function ($childPage) {
-                return $childPage->id;
+        while (sizeof($childPosts) > 0) {
+            $childrenAndParents = array_merge($childrenAndParents, $childPosts->toArray());
+            $childPosts = Post::whereIn('parent_id', $childPosts->map(function ($childPost) {
+                return $childPost->id;
             }))->get();
         }
 

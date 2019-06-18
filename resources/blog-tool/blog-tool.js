@@ -1,8 +1,8 @@
 Nova.booting((Vue, router, store) => {
   router.addRoutes([
     {
-      name: 'nova-page-manager',
-      path: '/nova-page-manager',
+      name: 'nova-blog',
+      path: '/nova-blog',
       component: require('./components/Tool'),
     },
   ]);

@@ -11,7 +11,7 @@ return [
   |
   */
 
-  'table' => 'nova_page_manager',
+  'table' => 'nova_blog',
 
 
   /*
@@ -36,7 +36,7 @@ return [
   | Add a custom implementation of the Page resource
   |
   */
-  'page_resource' => null,
+  'post_resource' => null,
 
 
   /*

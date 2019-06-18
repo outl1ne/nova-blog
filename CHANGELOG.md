@@ -49,7 +49,7 @@ Thanks to [@slovenianGooner](https://github.com/slovenianGooner)
 If you want to get the updated config, you can force re-publish the config file.
 
 ```bash
-php artisan vendor:publish --provider="OptimistDigital\NovaPageManager\ToolServiceProvider" --tag="config" --force
+php artisan vendor:publish --provider="OptimistDigital\NovaBlog\ToolServiceProvider" --tag="config" --force
 ```
 
 ## [1.6.0]
@@ -177,24 +177,24 @@ php artisan vendor:publish --provider="OptimistDigital\NovaPageManager\ToolServi
 - Programmatically created templates for pages and regions
 - Multilanguage support
 
-[1.7.4]: https://github.com/optimistdigital/nova-page-manager/compare/1.7.3...1.7.4
-[1.7.3]: https://github.com/optimistdigital/nova-page-manager/compare/1.7.2...1.7.3
-[1.7.2]: https://github.com/optimistdigital/nova-page-manager/compare/1.7.1...1.7.2
-[1.7.1]: https://github.com/optimistdigital/nova-page-manager/compare/1.7.0...1.7.1
-[1.7.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.6.1...1.7.0
-[1.6.1]: https://github.com/optimistdigital/nova-page-manager/compare/1.6.0...1.6.1
-[1.6.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.5.2...1.6.0
-[1.5.2]: https://github.com/optimistdigital/nova-page-manager/compare/1.5.1...1.5.2
-[1.5.1]: https://github.com/optimistdigital/nova-page-manager/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.4.0...1.5.0
-[1.4.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.3.1...1.4.0
-[1.3.1]: https://github.com/optimistdigital/nova-page-manager/compare/1.3.0...1.3.1
-[1.3.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.2.3...1.3.0
-[1.2.3]: https://github.com/optimistdigital/nova-page-manager/compare/1.2.2...1.2.3
-[1.2.2]: https://github.com/optimistdigital/nova-page-manager/compare/1.2.1...1.2.2
-[1.2.1]: https://github.com/optimistdigital/nova-page-manager/compare/1.2.0...1.2.1
-[1.2.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.1.0...1.2.0
-[1.1.0]: https://github.com/optimistdigital/nova-page-manager/compare/1.0.2...1.1.0
-[1.0.2]: https://github.com/optimistdigital/nova-page-manager/compare/1.0.1...1.0.2
-[1.0.1]: https://github.com/optimistdigital/nova-page-manager/compare/1.0.0...1.0.1
-[1.0.0]: https://github.com/optimistdigital/nova-page-manager/releases/tag/1.0.0
+[1.7.4]: https://github.com/optimistdigital/nova-blog/compare/1.7.3...1.7.4
+[1.7.3]: https://github.com/optimistdigital/nova-blog/compare/1.7.2...1.7.3
+[1.7.2]: https://github.com/optimistdigital/nova-blog/compare/1.7.1...1.7.2
+[1.7.1]: https://github.com/optimistdigital/nova-blog/compare/1.7.0...1.7.1
+[1.7.0]: https://github.com/optimistdigital/nova-blog/compare/1.6.1...1.7.0
+[1.6.1]: https://github.com/optimistdigital/nova-blog/compare/1.6.0...1.6.1
+[1.6.0]: https://github.com/optimistdigital/nova-blog/compare/1.5.2...1.6.0
+[1.5.2]: https://github.com/optimistdigital/nova-blog/compare/1.5.1...1.5.2
+[1.5.1]: https://github.com/optimistdigital/nova-blog/compare/1.5.0...1.5.1
+[1.5.0]: https://github.com/optimistdigital/nova-blog/compare/1.4.0...1.5.0
+[1.4.0]: https://github.com/optimistdigital/nova-blog/compare/1.3.1...1.4.0
+[1.3.1]: https://github.com/optimistdigital/nova-blog/compare/1.3.0...1.3.1
+[1.3.0]: https://github.com/optimistdigital/nova-blog/compare/1.2.3...1.3.0
+[1.2.3]: https://github.com/optimistdigital/nova-blog/compare/1.2.2...1.2.3
+[1.2.2]: https://github.com/optimistdigital/nova-blog/compare/1.2.1...1.2.2
+[1.2.1]: https://github.com/optimistdigital/nova-blog/compare/1.2.0...1.2.1
+[1.2.0]: https://github.com/optimistdigital/nova-blog/compare/1.1.0...1.2.0
+[1.1.0]: https://github.com/optimistdigital/nova-blog/compare/1.0.2...1.1.0
+[1.0.2]: https://github.com/optimistdigital/nova-blog/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/optimistdigital/nova-blog/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/optimistdigital/nova-blog/releases/tag/1.0.0

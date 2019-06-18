@@ -1,9 +1,9 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Http\Middleware;
+namespace OptimistDigital\NovaBlog\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use OptimistDigital\NovaPageManager\NovaPageManager;
+use OptimistDigital\NovaBlog\NovaBlog;
 
 class Authorize
 {
@@ -29,6 +29,6 @@ class Authorize
      */
     public function matchesTool($tool)
     {
-        return $tool instanceof NovaPageManager;
+        return $tool instanceof NovaBlog;
     }
 }

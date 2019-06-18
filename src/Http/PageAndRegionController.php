@@ -1,21 +1,21 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Http;
+namespace OptimistDigital\NovaBlog\Http;
 
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use OptimistDigital\NovaPageManager\Models\Page;
-use OptimistDigital\NovaPageManager\Models\Region;
+use OptimistDigital\NovaBlog\Models\Page;
+use OptimistDigital\NovaBlog\Models\Region;
 
-class PageAndRegionController extends Controller
+class PostAndRegionController extends Controller
 {
-    public function getPagesAndRegions(NovaRequest $request)
+    public function getPostssAndRegions(NovaRequest $request)
     {
-        $pages = Page::all();
+        $posts = Post::all();
         $regions = Region::all();
 
         return [
-            'pages' => $pages,
+            'posts' => $posts,
             'regions' => $regions
         ];
     }

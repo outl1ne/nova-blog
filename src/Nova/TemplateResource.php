@@ -1,9 +1,9 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Nova;
+namespace OptimistDigital\NovaBlog\Nova;
 
 use Laravel\Nova\Resource;
-use OptimistDigital\NovaPageManager\NovaPageManager;
+use OptimistDigital\NovaBlog\NovaBlog;
 use Illuminate\Http\Request;
 use OptimistDigital\NovaLocaleField\Filters\LocaleFilter;
 use OptimistDigital\NovaLocaleField\Filters\LocaleChildrenFilter;
@@ -16,9 +16,9 @@ abstract class TemplateResource extends Resource
     {
         if (isset($this->templateClass)) return $this->templateClass;
 
-        $templates = $this->type === 'page'
-            ? NovaPageManager::getPageTemplates()
-            : NovaPageManager::getRegionTemplates();
+        $templates = $this->type === 'post'
+            ? NovaBlog::getPostTemplates()
+            : NovaBlog::getRegionTemplates();
 
         if (isset($this->template)) {
             foreach ($templates as $template) {
@@ -50,7 +50,7 @@ abstract class TemplateResource extends Resource
     public function filters(Request $request)
     {
         return [
-            (new LocaleFilter('locale'))->locales(NovaPageManager::getLocales()),
+            (new LocaleFilter('locale'))->locales(NovaBlog::getLocales()),
             new LocaleChildrenFilter('locale_parent_id'),
         ];
     }

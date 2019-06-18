@@ -14,7 +14,7 @@ class AddChildParentRelationships extends Migration
      */
     public function up()
     {
-        $tableName = config('nova-page-manager.table', 'nova_page_manager');
+        $tableName = config('nova-blog.table', 'nova_blog');
 
         // Make "type" enum column into string
         Schema::table($tableName, function (Blueprint $table) {
@@ -63,7 +63,7 @@ class AddChildParentRelationships extends Migration
      */
     public function down()
     {
-        $table = config('nova-page-manager.table', 'nova_page_manager');
+        $table = config('nova-blog.table', 'nova_blog');
 
         // Not worth the effort to undo the massive amount of changes in "up"
         // as there's no usecase to undoing just this migration

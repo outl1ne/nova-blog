@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Models;
+namespace OptimistDigital\NovaBlog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

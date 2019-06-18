@@ -1,14 +1,14 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager;
+namespace OptimistDigital\NovaBlog;
 
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use OptimistDigital\NovaPageManager\Http\Middleware\Authorize;
-use OptimistDigital\NovaPageManager\Nova\Page;
-use OptimistDigital\NovaPageManager\Nova\Region;
-use OptimistDigital\NovaPageManager\Commands\CreateTemplate;
+use OptimistDigital\NovaBlog\Http\Middleware\Authorize;
+use OptimistDigital\NovaBlog\Nova\Post;
+use OptimistDigital\NovaBlog\Nova\Region;
+use OptimistDigital\NovaBlog\Commands\CreateTemplate;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -19,25 +19,25 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-page-manager');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-blog');
 
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
         ], 'migrations');
 
         $this->publishes([
-            __DIR__ . '/../config/nova-page-manager.php' => config_path('nova-page-manager.php'),
+            __DIR__ . '/../config/nova-blog.php' => config_path('nova-blog.php'),
         ], 'config');
 
         $this->app->booted(function () {
             $this->routes();
         });
 
-        $pageResource = config('nova-page-manager.page_resource') ?: Page::class;
-        $regionResource = config('nova-page-manager.region_resource') ?: Region::class;
+        $postResource = config('nova-blog.post_resource') ?: Post::class;
+        $regionResource = config('nova-blog.region_resource') ?: Region::class;
 
         Nova::resources([
-            $pageResource,
+            $postResource,
             $regionResource,
         ]);
 
@@ -59,8 +59,8 @@ class ToolServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware(['nova', Authorize::class])
-            ->prefix('nova-vendor/nova-page-manager')
-            ->group(__DIR__ . '/../routes/api.php');
+        // Route::middleware(['nova', Authorize::class])
+        //     ->prefix('nova-vendor/nova-blog')
+        //     ->group(__DIR__ . '/../routes/api.php');
     }
 }

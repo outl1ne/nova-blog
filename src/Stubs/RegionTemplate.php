@@ -3,7 +3,7 @@
 namespace App\Nova\Templates;
 
 use Illuminate\Http\Request;
-use OptimistDigital\NovaPageManager\Template;
+use OptimistDigital\NovaBlog\Template;
 
 class :className extends Template
 {

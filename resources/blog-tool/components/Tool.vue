@@ -1,6 +1,6 @@
 <template>
   <div>
-    <heading class="mb-6">Nova Page Manager</heading>
+    <heading class="mb-6">Nova Blog</heading>
     <card class="bg-90 flex flex-col items-center justify-center" style="min-height: 300px">
       <svg
         class="spin fill-80 mb-6"
@@ -21,7 +21,7 @@
         You can edit this tool's component at:
         <code
           class="ml-1 border border-80 text-sm font-mono text-white bg-black rounded px-2 py-1"
-          >/nova-components/NovaPageManager/resources/js/components/Tool.vue</code
+          >/nova-components/NovaBlog/resources/js/components/Tool.vue</code
         >
       </p>
     </card>

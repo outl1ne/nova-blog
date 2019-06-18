@@ -50,14 +50,5 @@
     "sort-packages": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
-  "repositories": {
-    "dev-package": {
-      "type": "path",
-      "url": "relative/or/absolute/path/to/my/dev-package",
-      "options": {
-        "symlink": true
-      }
-    }
-  }
+  "prefer-stable": true
 }

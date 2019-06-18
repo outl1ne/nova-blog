@@ -1,34 +1,34 @@
 <?php
 
-use OptimistDigital\NovaPageManager\Models\Page;
-use OptimistDigital\NovaPageManager\Models\Region;
+use OptimistDigital\NovaBlog\Models\Post;
+use OptimistDigital\NovaBlog\Models\Region;
 use Illuminate\Support\Collection;
-use OptimistDigital\NovaPageManager\Models\TemplateModel;
-use OptimistDigital\NovaPageManager\NovaPageManager;
+use OptimistDigital\NovaBlog\Models\TemplateModel;
+use OptimistDigital\NovaBlog\NovaBlog;
 
 // ------------------------------
-// nova_get_pages_structure
+// nova_get_posts_structure
 // ------------------------------
 
-if (!function_exists('nova_get_pages_structure')) {
-    function nova_get_pages_structure()
+if (!function_exists('nova_get_blog_structure')) {
+    function nova_get_blog_structure()
     {
-        $formatPages = function (Collection $pages) use (&$formatPages) {
+        $formatPosts = function (Collection $posts) use (&$formatPosts) {
             $data = [];
-            $pages->each(function ($page) use (&$data, &$formatPages) {
-                $localeChildren = Page::where('locale_parent_id', $page->id)->get();
-                $_pages = collect([$page, $localeChildren])->flatten();
+            $posts->each(function ($post) use (&$data, &$formatPosts) {
+                $localeChildren = Post::where('locale_parent_id', $post->id)->get();
+                $_posts = collect([$post, $localeChildren])->flatten();
                 $_data = [
-                    'locales' => $_pages->pluck('locale'),
-                    'id' => $_pages->pluck('id', 'locale'),
-                    'name' => $_pages->pluck('name', 'locale'),
-                    'slug' => $_pages->pluck('slug', 'locale'),
-                    'template' => $page->template,
+                    'locales' => $_posts->pluck('locale'),
+                    'id' => $_posts->pluck('id', 'locale'),
+                    'name' => $_posts->pluck('name', 'locale'),
+                    'slug' => $_posts->pluck('slug', 'locale'),
+                    'template' => $post->template,
                 ];
 
-                $children = Page::where('parent_id', $page->id)->get();
+                $children = Post::where('parent_id', $post->id)->get();
                 if ($children->count() > 0) {
-                    $_data['children'] = $formatPages($children);
+                    $_data['children'] = $formatPosts($children);
                 }
 
                 $data[] = $_data;
@@ -36,8 +36,8 @@ if (!function_exists('nova_get_pages_structure')) {
             return $data;
         };
 
-        $parentPages = Page::whereNull('parent_id')->whereNull('locale_parent_id')->get();
-        return $formatPages($parentPages);
+        $parentPosts = Post::whereNull('parent_id')->whereNull('locale_parent_id')->get();
+        return $formatPosts($parentPosts);
     }
 }
 
@@ -77,24 +77,24 @@ if (!function_exists('nova_get_regions')) {
 
 
 // ------------------------------
-// nova_get_page
+// nova_get_post
 // ------------------------------
 
-if (!function_exists('nova_get_page')) {
+if (!function_exists('nova_get_post')) {
 
-    function nova_get_page($pageId)
+    function nova_get_post($postId)
     {
-        if (empty($pageId)) return null;
-        $page = Page::find($pageId);
-        if (empty($page)) return null;
+        if (empty($postId)) return null;
+        $post = Post::find($postId);
+        if (empty($post)) return null;
 
         return [
-            'locale' => $page->locale,
-            'id' => $page->id,
-            'name' => $page->name,
-            'slug' => $page->slug,
-            'data' => nova_resolve_template_model_data($page),
-            'template' => $page->template,
+            'locale' => $post->locale,
+            'id' => $post->id,
+            'name' => $post->name,
+            'slug' => $post->slug,
+            'data' => nova_resolve_template_model_data($post),
+            'template' => $post->template,
         ];
     }
 }
@@ -122,7 +122,7 @@ if (!function_exists('nova_resolve_template_model_data')) {
     function nova_resolve_template_model_data(TemplateModel $templateModel)
     {
         // Find the Template class for the model
-        foreach (NovaPageManager::getTemplates() as $tmpl) {
+        foreach (NovaBlog::getTemplates() as $tmpl) {
             if ($tmpl::$name === $templateModel->template) $templateClass = $tmpl;
         }
 

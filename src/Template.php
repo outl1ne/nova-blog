@@ -1,12 +1,12 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager;
+namespace OptimistDigital\NovaBlog;
 
 use Illuminate\Http\Request;
 
 abstract class Template
 {
-    public static $type = 'page';
+    public static $type = 'post';
     public static $name = '';
     public static $seo = false;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Models;
+namespace OptimistDigital\NovaBlog\Models;
 
-use OptimistDigital\NovaPageManager\NovaPageManager;
+use OptimistDigital\NovaBlog\NovaBlog;
 
 class Region extends TemplateModel
 {
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(NovaPageManager::getRegionsTableName());
+        $this->setTable(NovaBlog::getRegionsTableName());
     }
 }

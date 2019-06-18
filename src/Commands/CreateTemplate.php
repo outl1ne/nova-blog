@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaPageManager\Commands;
+namespace OptimistDigital\NovaBlog\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -14,9 +14,9 @@ class CreateTemplate extends Command
      **/
     protected $files;
 
-    protected $typeOptions = ['page', 'region'];
+    protected $typeOptions = ['post', 'region'];
 
-    protected $signature = 'pagemanager:template {className?} {name?} {type?}';
+    protected $signature = 'postmanager:template {className?} {name?} {type?}';
 
     protected $description = 'Creates a new Template file and its boilerplate.';
 
@@ -59,7 +59,7 @@ class CreateTemplate extends Command
     public function getNameArgument()
     {
         if (!$this->argument('name')) {
-            return $this->ask('Please enter a name for the Template (ie about-page)');
+            return $this->ask('Please enter a name for the Template (ie about-post)');
         }
         return $this->argument('name');
     }
@@ -117,8 +117,8 @@ class CreateTemplate extends Command
             ':type' => $this->type,
         ];
 
-        $templateFilePath = ($this->type === 'page')
-            ? __DIR__ . '/../Stubs/PageTemplate.php'
+        $templateFilePath = ($this->type === 'post')
+            ? __DIR__ . '/../Stubs/PostTemplate.php'
             : __DIR__ . '/../Stubs/RegionTemplate.php';
 
         $template = $this->files->get($templateFilePath);
