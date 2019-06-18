@@ -1,6 +1,6 @@
 {
-  "name": "optimistdigital/nova-page-manager",
-  "description": "Page(s) and region(s) manager for Laravel Nova.",
+  "name": "optimistdigital/nova-blog",
+  "description": "Package under development",
   "keywords": [
     "laravel",
     "nova",
@@ -9,6 +9,11 @@
     "optimistdigital"
   ],
   "authors": [
+    {
+      "name": "Marika Must",
+      "email": "must.marika@gmail.com",
+      "role": "Developer"
+    },
     {
       "name": "Tarvo Reinpalu",
       "email": "tarvoreinpalu@gmail.com",
@@ -28,7 +33,7 @@
   },
   "autoload": {
     "psr-4": {
-      "OptimistDigital\\NovaPageManager\\": "src/"
+      "OptimistDigital\\NovaBlog\\": "src/"
     },
     "files": [
       "src/helpers.php"
@@ -37,7 +42,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "OptimistDigital\\NovaPageManager\\ToolServiceProvider"
+        "OptimistDigital\\NovaBlog\\ToolServiceProvider"
       ]
     }
   },
@@ -45,5 +50,14 @@
     "sort-packages": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": {
+    "dev-package": {
+      "type": "path",
+      "url": "relative/or/absolute/path/to/my/dev-package",
+      "options": {
+        "symlink": true
+      }
+    }
+  }
 }
