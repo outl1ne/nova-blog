@@ -31,12 +31,11 @@ if (!function_exists('nova_get_post')) {
         if (empty($post)) return null;
 
         return [
-            'locale' => $post->locale,
             'id' => $post->id,
-            'name' => $post->name,
+            'name' => $post->title,
             'slug' => $post->slug,
-            'data' => nova_resolve_template_model_data($post),
-            'template' => $post->template,
+            'published_at' => $post->published_at,
+            'data' => $post->post_content = json_decode($post->post_content),
         ];
     }
 }

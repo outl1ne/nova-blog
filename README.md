@@ -1,20 +1,10 @@
-# Nova Page Manager
+# Nova Blog
 
-This [Laravel Nova](https://nova.laravel.com) package allows you to create and manage pages and regions. The package is geared towards headless CMS's.
+This [Laravel Nova](https://nova.laravel.com) package allows you to create a blog and manage blogposts. The package is geared towards headless CMS's.
 
 ## Features
 
-- Pages and Regions management
-- Programmatically created templates for Pages and Regions
-- Multilanguage support
-
-## Screenshots
-
-![Index View](docs/index.png)
-
-![Filter Dropdown](docs/filter.png)
-
-![Page Content Area](docs/content.png)
+- Blogpost management
 
 ## Installation
 
@@ -53,128 +43,16 @@ public function tools()
 
 ## Usage
 
-### Creating templates
-
-Templates can be created using the following Artisan command:
-
-```bash
-php artisan pagemanager:template {className}
-```
-
-This will ask you a few additional details and will create a base template in `App\Nova\Templates`.
-
-The template base has a few properties:
-
-```php
-// Define whether the template is for a page or a region
-// Applicable values: 'page', 'region'
-public static $type = 'page';
-
-// The unique name for the page, usually similar to a slug
-public static $name = 'about-us';
-
-// The package has built in SEO fields support
-// This boolean decides whether or not to display them
-public static $seo = false;
-
-// Return all fields here, just as you would inside a resource
-public function fields(Request $request): array
-{
-  return [
-      Text::make('Title', 'title')
-  ];
-}
-```
-
-### Registering templates
-
-All your templates have to be registered using the `NovaBlog::configure()` function, preferably in `NovaServiceProvider`'s `boot()` function.
-
-Example:
-
-```php
-// in app/Providers/NovaServiceProvider.php
-
-public function boot()
-{
-    \OptimistDigital\NovaBlog\NovaBlog::configure([
-        'templates' => [
-            \App\Nova\Templates\HomePageTemplate::class
-        ],
-        'locales' => []
-    ]);
-}
-```
-
-### Defining locales
-
-Locales can be defined similarly to how templates are registered. Pass the dictionary of languages to the `NovaBlog::configure()` function.
-
-Example:
-
-```php
-// in app/Providers/NovaServiceProvider.php
-
-public function boot()
-{
-    \OptimistDigital\NovaBlog\NovaBlog::configure([
-        'templates' => [],
-        'locales' => [
-            'en_US' => 'English',
-            'et_EE' => 'Estonian'
-        ]
-    ]);
-}
-```
-
-### Overwrite package resources
-
-You can overwrite the package resources (Page & Region) by setting the config options in `nova-blog.php`.
-
-Note: If you create your resources under `App\Nova` namespace, to avoid key duplication you must manually register all other resources in the `NovaServiceProvider`. See [Registering resources](https://nova.laravel.com/docs/2.0/resources/#registering-resources)
-
 ## Helper functions
 
-### nova_get_pages_structure()
+### nova_get_blog_structure()
 
-The helper function `nova_get_pages_structure()` returns the base pages structure (slugs, templates, child-parent relationships) that you can build your routes upon in the front-end. This does not return the pages' data.
+The helper function `nova_get_blog_structure()` returns the base posts structure (titles, slugs, published at dates, content) that you can build your routes upon in the front-end.
 
 Example response:
 
 ```json
-[
-  {
-    "locales": ["en_US", "et_EE"],
-    "id": {
-      "en_US": 3,
-      "et_EE": 4
-    },
-    "name": {
-      "en_US": "Home",
-      "et_EE": "Kodu"
-    },
-    "slug": {
-      "en_US": "/",
-      "et_EE": "/"
-    },
-    "template": "home-page",
-    "children": [
-      {
-        "locales": ["en_US"],
-        "id": {
-          "en_US": 5
-        },
-        "name": {
-          "en_US": "About"
-        },
-        "slug": {
-          "en_US": "about"
-        },
-        "template": "home-page"
-      }
-    ]
-  }
-]
+Test post content.
 ```
 
 ### nova_get_regions()
@@ -186,47 +64,92 @@ Example response:
 ```json
 [
   {
-    "locales": ["en_US"],
-    "id": {
-      "en_US": 3
-    },
-    "name": {
-      "en_US": "Main header"
-    },
-    "template": "main-header",
-    "data": {
-      "en_US": {
-        "content": [
-          {
-            "layout": "horizontal-text-section",
-            "attributes": {
-              "text": "Lorem ipsum"
-            }
-          }
-        ]
+    "id": 7,
+    "created_at": "2019-06-19 11:58:56",
+    "updated_at": "2019-06-19 11:59:23",
+    "title": "Test post 1",
+    "slug": "testpost1",
+    "post_content": [
+      {
+        "layout": "text",
+        "key": "8965c7bfc0918086",
+        "attributes": {
+          "text-content": "Test post content."
+        }
+      },
+      {
+        "layout": "image",
+        "key": "56f5bbe608b68cd6",
+        "attributes": {
+          "caption": "Test post image."
+        }
       }
-    }
+    ],
+    "published_at": "2019-06-19 09:00:00",
+    "seo_title": null,
+    "seo_description": null,
+    "seo_image": null,
+    "data": null
+  },
+  {
+    "id": 8,
+    "created_at": "2019-06-19 12:00:06",
+    "updated_at": "2019-06-19 12:00:06",
+    "title": "Test post 2",
+    "slug": "testpost2",
+    "post_content": [
+      {
+        "layout": "text",
+        "key": "0e340b84bc5dec28",
+        "attributes": {
+          "text-content": "Test post content."
+        }
+      },
+      {
+        "layout": "image",
+        "key": "a4625050e49cf77c",
+        "attributes": {
+          "caption": "Test post image."
+        }
+      }
+    ],
+    "published_at": "2019-06-19 09:00:05",
+    "seo_title": null,
+    "seo_description": null,
+    "seo_image": null,
+    "data": null
   }
 ]
 ```
 
-### nova_get_page(\$pageId)
+### nova_get_post(\$postId)
 
-The helper function `nova_get_page($pageId)` finds and returns the page with the given ID.
+The helper function `nova_get_post($postId)` finds and returns the post with the given ID.
 
-Example response for querying page with ID `3` (`nova_get_page(3)`):
+Example response for querying page with ID `7` (`nova_get_post(7)`):
 
 ```json
 {
-  "locale": "en_US",
-  "id": 3,
-  "name": "Home",
-  "slug": "/",
-  "data": {
-    "banner": [],
-    "categories_grid": []
-  },
-  "template": "home-page"
+  "id": 7,
+  "name": "Test post 1",
+  "slug": "testpost1",
+  "published_at": "2019-06-19T09:00:00.000000Z",
+  "data": [
+    {
+      "layout": "text",
+      "key": "8965c7bfc0918086",
+      "attributes": {
+        "text-content": "Test post content."
+      }
+    },
+    {
+      "layout": "image",
+      "key": "56f5bbe608b68cd6",
+      "attributes": {
+        "caption": "Test post image."
+      }
+    }
+  ]
 }
 ```
 
@@ -237,4 +160,4 @@ Example response for querying page with ID `3` (`nova_get_page(3)`):
 
 ## License
 
-Nova page manager is open-sourced software licensed under the [MIT license](LICENSE.md).
+Nova blog is open-sourced software licensed under the [MIT license](LICENSE.md).
