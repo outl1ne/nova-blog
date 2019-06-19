@@ -16,9 +16,9 @@ abstract class TemplateResource extends Resource
     {
         if (isset($this->templateClass)) return $this->templateClass;
 
-        $templates = $this->type === 'post'
-            ? NovaBlog::getPostTemplates()
-            : NovaBlog::getRegionTemplates();
+        // $templates = $this->type === 'post'
+        //     ? NovaBlog::getPostTemplates()
+        //     : NovaBlog::getRegionTemplates();
 
         if (isset($this->template)) {
             foreach ($templates as $template) {
@@ -45,13 +45,5 @@ abstract class TemplateResource extends Resource
         }
 
         return $templateFields;
-    }
-
-    public function filters(Request $request)
-    {
-        return [
-            (new LocaleFilter('locale'))->locales(NovaBlog::getLocales()),
-            new LocaleChildrenFilter('locale_parent_id'),
-        ];
     }
 }

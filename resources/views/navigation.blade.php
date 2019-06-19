@@ -21,18 +21,4 @@
             Posts
         </router-link>
     </li>
-
-    <li class="leading-wide mb-4 text-sm">
-        <router-link
-            :to="{
-                name: 'index',
-                params: {
-                    resourceName: 'regions'
-                }
-            }"
-            class="text-white ml-8 no-underline dim"
-        >
-            Regions
-        </router-link>
-    </li>
 </ul>

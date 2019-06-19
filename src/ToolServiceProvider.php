@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use OptimistDigital\NovaBlog\Http\Middleware\Authorize;
 use OptimistDigital\NovaBlog\Nova\Post;
 use OptimistDigital\NovaBlog\Nova\Region;
-use OptimistDigital\NovaBlog\Commands\CreateTemplate;
+// use OptimistDigital\NovaBlog\Commands\CreateTemplate;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -34,18 +34,17 @@ class ToolServiceProvider extends ServiceProvider
         });
 
         $postResource = config('nova-blog.post_resource') ?: Post::class;
-        $regionResource = config('nova-blog.region_resource') ?: Region::class;
+
 
         Nova::resources([
-            $postResource,
-            $regionResource,
+            $postResource
         ]);
 
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                CreateTemplate::class
-            ]);
-        }
+        // if ($this->app->runningInConsole()) {
+        //     $this->commands([
+        //         CreateTemplate::class
+        //     ]);
+        // }
     }
 
     /**

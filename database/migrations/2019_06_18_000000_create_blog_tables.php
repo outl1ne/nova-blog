@@ -18,18 +18,15 @@ class CreateBlogTables extends Migration
         Schema::create($table, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->enum('type', ['page', 'region']);
-            $table->string('name');
+            $table->enum('type', ['post']);
+            $table->string('title');
             $table->string('slug')->default('')->unique();
-            $table->string('locale');
-            $table->string('template');
+            $table->string('post_content');
+            $table->timestamp('published_at');
             $table->string('seo_title')->nullable();
             $table->string('seo_description')->nullable();
             $table->string('seo_image')->nullable();
-            $table->bigInteger('parent_id')->nullable();
             $table->json('data')->nullable();
-
-            $table->unique(['parent_id', 'locale']);
         });
     }
 

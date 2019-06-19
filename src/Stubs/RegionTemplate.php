@@ -5,7 +5,7 @@ namespace App\Nova\Templates;
 use Illuminate\Http\Request;
 use OptimistDigital\NovaBlog\Template;
 
-class :className extends Template
+class: className extends Template
 {
     public static $type = ':type';
     public static $name = ':name';

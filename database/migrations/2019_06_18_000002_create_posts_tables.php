@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-class MakeSlugLocalePairUnique extends Migration
+class CreatePostsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +17,13 @@ class MakeSlugLocalePairUnique extends Migration
         $tableName = config('nova-blog.table', 'nova_blog');
         $postsTableName = $tableName . '_posts';
 
+
+        // Rename posts table
+        Schema::rename($tableName, $postsTableName);
+
+        // Drop deprecated type column
         Schema::table($postsTableName, function ($table) {
-            $table->dropUnique('nova_blog_slug_unique');
-            $table->unique(['slug']);
+            $table->dropColumn('type');
         });
     }
 
@@ -29,11 +35,13 @@ class MakeSlugLocalePairUnique extends Migration
     public function down()
     {
         $tableName = config('nova-blog.table', 'nova_blog');
+        // $regionsTableName = $tableName . '_regions';
         $postsTableName = $tableName . '_posts';
 
-        Schema::table($postsTableName, function ($table) {
-            $table->dropUnique(['slug']);
-            $table->unique('slug');
-        });
+        // Not worth the effort to undo the massive amount of changes in "up"
+        // as there's no usecase to undoing just this migration
+
+        // Schema::dropIfExists($regionsTableName);
+        Schema::dropIfExists($postsTableName);
     }
 }

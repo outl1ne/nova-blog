@@ -9,9 +9,10 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\NovaBlog;
-use OptimistDigital\NovaBlog\Nova\Fields\ParentField;
-use OptimistDigital\NovaBlog\Nova\Fields\TemplateField;
-use OptimistDigital\NovaLocaleField\LocaleField;
+use Whitecube\NovaFlexibleContent\Flexible;
+use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Datetime;
+
 
 class Post extends TemplateResource
 {
@@ -30,15 +31,24 @@ class Post extends TemplateResource
 
         $fields = [
             ID::make()->sortable(),
-            Text::make('Name', 'name')->rules('required'),
-            Text::make('Slug', 'slug')
-                ->creationRules('required', "unique:{$tableName},slug,NULL,id,locale,$request->locale")
-                ->updateRules('required', "unique:{$tableName},slug,{{resourceId}},id,locale,$request->locale"),
-            ParentField::make('Parent', 'parent_id'),
-            TemplateField::make('Template', 'template'),
-            LocaleField::make('Locale', 'locale', 'locale_parent_id')
-                ->locales(NovaBlog::getLocales())
-                ->maxLocalesOnIndex(config('nova-blog.max_locales_shown_on_index', 4))
+            Text::make('Title', 'title')->rules('required'),
+            Text::make('Slug', 'slug'),
+            Datetime::make('Published at', 'published_at'),
+
+            Flexible::make('Post content', 'post_content')
+                ->addLayout('Post content block', 'post-content-block', [
+                    Markdown::make('Block content', 'block-content'),
+                ])
+                ->addLayout('Video section', 'video', [
+                    Text::make('Title'),
+                    Image::make('Video thumbnail', 'thumbnail'),
+                    Text::make('Video ID (YouTube)', 'video'),
+                    Text::make('Video caption', 'caption')
+                ])
+                ->addLayout('Image section', 'image', [
+                    Image::make('Image', 'image'),
+                    Text::make('Image caption', 'caption')
+                ])
         ];
 
         if (isset($templateClass) && $templateClass::$seo) $fields[] = new Panel('SEO', $this->getSeoFields());

@@ -25,7 +25,7 @@ return [
   |
   */
 
-  'max_locales_shown_on_index' => 4,
+  // 'max_locales_shown_on_index' => 4,
 
 
   /*
@@ -47,6 +47,6 @@ return [
   | Add a custom implementation of the Region resource
   |
   */
-  'region_resource' => null
+  // 'region_resource' => null
 
 ];
