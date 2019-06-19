@@ -7,46 +7,20 @@ return [
   | Table name
   |--------------------------------------------------------------------------
   |
-  | Set a custom table for Nova Page Manager to store its data.
+  | Set a custom table for Nova Blog to store its data.
   |
   */
 
   'table' => 'nova_blog',
-
-
-  /*
-  |--------------------------------------------------------------------------
-  | Max locales shown on index
-  |--------------------------------------------------------------------------
-  |
-  | Sets the number of locales shown on index. If the number of locales
-  | exceeds the defined count, the locales will be shown only on the detail
-  | view.
-  |
-  */
-
-  // 'max_locales_shown_on_index' => 4,
-
 
   /*
   |--------------------------------------------------------------------------
   | Overwrite the page resource with a custom implementation
   |--------------------------------------------------------------------------
   |
-  | Add a custom implementation of the Page resource
+  | Add a custom implementation of the Post resource
   |
   */
   'post_resource' => null,
-
-
-  /*
-  |--------------------------------------------------------------------------
-  | Overwrite the region resource with a custom implementation
-  |--------------------------------------------------------------------------
-  |
-  | Add a custom implementation of the Region resource
-  |
-  */
-  // 'region_resource' => null
 
 ];

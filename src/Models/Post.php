@@ -6,7 +6,6 @@ use OptimistDigital\NovaBlog\NovaBlog;
 
 class Post extends TemplateModel
 {
-
     protected $casts = [
         'published_at' => 'datetime'
     ];

@@ -3,10 +3,6 @@
 namespace OptimistDigital\NovaBlog\Nova;
 
 use Laravel\Nova\Resource;
-use OptimistDigital\NovaBlog\NovaBlog;
-use Illuminate\Http\Request;
-use OptimistDigital\NovaLocaleField\Filters\LocaleFilter;
-use OptimistDigital\NovaLocaleField\Filters\LocaleChildrenFilter;
 
 abstract class TemplateResource extends Resource
 {
@@ -16,16 +12,11 @@ abstract class TemplateResource extends Resource
     {
         if (isset($this->templateClass)) return $this->templateClass;
 
-        // $templates = $this->type === 'post'
-        //     ? NovaBlog::getPostTemplates()
-        //     : NovaBlog::getRegionTemplates();
-
         if (isset($this->template)) {
             foreach ($templates as $template) {
                 if ($template::$name == $this->template) $this->templateClass = new $template($this->resource);
             }
         }
-
         return $this->templateClass;
     }
 

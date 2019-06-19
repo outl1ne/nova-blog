@@ -3,12 +3,8 @@
 namespace OptimistDigital\NovaBlog;
 
 use Laravel\Nova\Nova;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use OptimistDigital\NovaBlog\Http\Middleware\Authorize;
 use OptimistDigital\NovaBlog\Nova\Post;
-use OptimistDigital\NovaBlog\Nova\Region;
-// use OptimistDigital\NovaBlog\Commands\CreateTemplate;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -35,16 +31,9 @@ class ToolServiceProvider extends ServiceProvider
 
         $postResource = config('nova-blog.post_resource') ?: Post::class;
 
-
         Nova::resources([
             $postResource
         ]);
-
-        // if ($this->app->runningInConsole()) {
-        //     $this->commands([
-        //         CreateTemplate::class
-        //     ]);
-        // }
     }
 
     /**
@@ -57,9 +46,5 @@ class ToolServiceProvider extends ServiceProvider
         if ($this->app->routesAreCached()) {
             return;
         }
-
-        // Route::middleware(['nova', Authorize::class])
-        //     ->prefix('nova-vendor/nova-blog')
-        //     ->group(__DIR__ . '/../routes/api.php');
     }
 }

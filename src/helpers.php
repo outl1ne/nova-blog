@@ -1,8 +1,6 @@
 <?php
 
 use OptimistDigital\NovaBlog\Models\Post;
-use OptimistDigital\NovaBlog\Models\Region;
-use Illuminate\Support\Collection;
 use OptimistDigital\NovaBlog\Models\TemplateModel;
 use OptimistDigital\NovaBlog\NovaBlog;
 
@@ -91,9 +89,3 @@ if (!function_exists('nova_resolve_template_model_data')) {
         return $resolvedData;
     }
 }
-
-
-// ------------------------------
-// nova_resolve_flexible_fields_data
-// ------------------------------
-

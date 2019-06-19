@@ -36,8 +36,8 @@ class Post extends TemplateResource
             Datetime::make('Published at', 'published_at'),
 
             Flexible::make('Post content', 'post_content')
-                ->addLayout('Post content block', 'post-content-block', [
-                    Markdown::make('Block content', 'block-content'),
+                ->addLayout('Text section', 'text', [
+                    Markdown::make('Text content', 'text-content'),
                 ])
                 ->addLayout('Video section', 'video', [
                     Text::make('Title'),

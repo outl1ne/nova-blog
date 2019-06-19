@@ -8,7 +8,6 @@ use Laravel\Nova\Tool;
 class NovaBlog extends Tool
 {
     private static $templates = [];
-    private static $locales = [];
 
     /**
      * Perform any tasks that need to happen when the tool is booted.
