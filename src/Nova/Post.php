@@ -13,7 +13,7 @@ use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Datetime;
-
+use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 
 class Post extends TemplateResource
 {
@@ -33,7 +33,8 @@ class Post extends TemplateResource
         $fields = [
             ID::make()->sortable(),
             Markdown::make('Title', 'title')->rules('required'),
-            Text::make('Slug', 'slug'),
+
+            Slug::make('Slug', 'slug'),
             Datetime::make('Published at', 'published_at'),
 
             Flexible::make('Post content', 'post_content')
@@ -50,7 +51,7 @@ class Post extends TemplateResource
                     Text::make('Video ID (YouTube)', 'video'),
                     Text::make('Video caption', 'caption')
                 ])
-                ->addLayout('Embed media section', 'other-media', [
+                ->addLayout('Other embed media section', 'other-media', [
                     Textarea::make('Embed media code (twitter, iframe, etc.)', 'media-code'),
                     Text::make('Media caption', 'caption')
                 ])
