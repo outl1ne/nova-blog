@@ -52,16 +52,6 @@ The helper function `nova_get_blog_structure()` returns the base posts structure
 Example response:
 
 ```json
-Test post content.
-```
-
-### nova_get_regions()
-
-The helper function `nova_get_regions()` returns all the regions and their data.
-
-Example response:
-
-```json
 [
   {
     "id": 7,
