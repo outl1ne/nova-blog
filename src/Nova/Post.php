@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -27,11 +28,11 @@ class Post extends TemplateResource
         // Get base data
         $tableName = NovaBlog::getPostsTableName();
         $templateClass = $this->getTemplateClass();
-        $templateFields = $this->getTemplateFields();
+        $templateFieldsAndPanels = $this->getTemplateFieldsAndPanels();
 
         $fields = [
             ID::make()->sortable(),
-            Text::make('Title', 'title')->rules('required'),
+            Markdown::make('Title', 'title')->rules('required'),
             Text::make('Slug', 'slug'),
             Datetime::make('Published at', 'published_at'),
 
@@ -39,21 +40,36 @@ class Post extends TemplateResource
                 ->addLayout('Text section', 'text', [
                     Markdown::make('Text content', 'text-content'),
                 ])
+                ->addLayout('Image section', 'image', [
+                    Image::make('Image', 'image'),
+                    Text::make('Image caption', 'caption')
+                ])
                 ->addLayout('Video section', 'video', [
                     Text::make('Title'),
                     Image::make('Video thumbnail', 'thumbnail'),
                     Text::make('Video ID (YouTube)', 'video'),
                     Text::make('Video caption', 'caption')
                 ])
-                ->addLayout('Image section', 'image', [
-                    Image::make('Image', 'image'),
-                    Text::make('Image caption', 'caption')
+                ->addLayout('Embed media section', 'other-media', [
+                    Textarea::make('Embed media code (twitter, iframe, etc.)', 'media-code'),
+                    Text::make('Media caption', 'caption')
                 ])
         ];
 
-        if (isset($templateClass) && $templateClass::$seo) $fields[] = new Panel('SEO', $this->getSeoFields());
+        $fields[] = new Panel('SEO', $this->getSeoFields());
 
-        $fields[] = new Panel('Post data', $templateFields);
+        if (count($templateFieldsAndPanels['fields']) > 0) {
+            $fields[] = new Panel(
+                'Page data',
+                array_merge(
+                    [Heading::make('Page data')->hideFromDetail()],
+                    $templateFieldsAndPanels['fields']
+                )
+            );
+        }
+        if (count($templateFieldsAndPanels['panels']) > 0) {
+            $fields = array_merge($fields, $templateFieldsAndPanels['panels']);
+        }
 
         return $fields;
     }
@@ -61,10 +77,10 @@ class Post extends TemplateResource
     protected function getSeoFields()
     {
         return [
-            Heading::make('SEO')->hideFromIndex()->hideWhenCreating()->hideFromDetail(),
-            Text::make('SEO Title', 'seo_title')->hideFromIndex()->hideWhenCreating(),
-            Text::make('SEO Description', 'seo_description')->hideFromIndex()->hideWhenCreating(),
-            Image::make('SEO Image', 'seo_image')->hideFromIndex()->hideWhenCreating()
+            Heading::make('SEO'),
+            Text::make('SEO Title', 'seo_title'),
+            Text::make('SEO Description', 'seo_description'),
+            Image::make('SEO Image', 'seo_image'),
         ];
     }
 
