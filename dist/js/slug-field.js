@@ -261,6 +261,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -269,8 +270,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   data: function data() {
     return {
-      value: ''
+      value: '',
+      hasTouched: false
     };
+  },
+  mounted: function mounted() {
+    this.autoFillFromTitle();
   },
 
 
@@ -280,6 +285,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     fill: function fill(formData) {
       formData.append(this.field.attribute, this.value || '');
+    },
+    getSlug: function getSlug(text) {
+      return encodeURI(text.toLowerCase().replace(/\s/g, '-').replace(/\*/g, ''));
+    },
+    updateTitle: function updateTitle(container) {
+      if (this.hasTouched) return;
+
+      // Codemirror's textarea doesn't contain the entire value, so we look at the div content to get the actual value
+      var value = container.querySelector('.CodeMirror-code').innerText;
+
+      this.value = this.getSlug(value);
+    },
+    autoFillFromTitle: function autoFillFromTitle() {
+      var _this = this;
+
+      // Find the correct field based on the label
+      var titleContainer = document.querySelector('label[for="title"]').parentElement.parentElement;
+      // Codemirror creates two textareas, so we look for the one with tabindex which is the one that receives user input
+      var textarea = titleContainer.querySelector('textarea[tabindex="0"]');
+      textarea.addEventListener('input', function (evt) {
+        return _this.updateTitle(titleContainer);
+      });
+      textarea.addEventListener('change', function (evt) {
+        return _this.updateTitle(titleContainer);
+      });
     }
   }
 });
@@ -315,12 +345,17 @@ var render = function() {
           },
           domProps: { value: _vm.value },
           on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.value = $event.target.value
+              },
+              function($event) {
+                _vm.hasTouched = true
               }
-              _vm.value = $event.target.value
-            }
+            ]
           }
         }),
         _vm._v(" "),

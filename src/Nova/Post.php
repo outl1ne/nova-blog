@@ -32,7 +32,7 @@ class Post extends TemplateResource
 
         $fields = [
             ID::make()->sortable(),
-            Markdown::make('Title', 'title')->rules('required'),
+            Markdown::make('Title', 'title')->rules('required')->alwaysShow(),
 
             Slug::make('Slug', 'slug'),
             Datetime::make('Published at', 'published_at'),
