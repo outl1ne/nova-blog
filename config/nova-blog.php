@@ -15,7 +15,7 @@ return [
 
   /*
   |--------------------------------------------------------------------------
-  | Overwrite the page resource with a custom implementation
+  | Overwrite the post resource with a custom implementation
   |--------------------------------------------------------------------------
   |
   | Add a custom implementation of the Post resource

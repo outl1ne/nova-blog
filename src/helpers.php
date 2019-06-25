@@ -1,8 +1,7 @@
 <?php
 
 use OptimistDigital\NovaBlog\Models\Post;
-use OptimistDigital\NovaBlog\Models\TemplateModel;
-use OptimistDigital\NovaBlog\NovaBlog;
+
 
 // ------------------------------
 // nova_get_posts_structure
@@ -19,12 +18,34 @@ if (!function_exists('nova_get_blog_structure')) {
 }
 
 // ------------------------------
+// nova_get_post_by_slug
+// ------------------------------
+
+if (!function_exists('nova_get_post_by_slug')) {
+
+    function nova_get_post_by_slug($slug)
+    {
+        if (empty($slug)) return null;
+        $post = Post::where('slug', $slug)->firstOrFail();
+        if (empty($post)) return null;
+
+        return [
+            'id' => $post->id,
+            'name' => $post->title,
+            'slug' => $post->slug,
+            'published_at' => $post->published_at,
+            'post_content' => $post->post_content = json_decode($post->post_content),
+        ];
+    }
+}
+
+// ------------------------------
 // nova_get_post
 // ------------------------------
 
-if (!function_exists('nova_get_post')) {
+if (!function_exists('nova_get_post_by_id')) {
 
-    function nova_get_post($postId)
+    function nova_get_post_by_id($postId)
     {
         if (empty($postId)) return null;
         $post = Post::find($postId);
@@ -35,56 +56,7 @@ if (!function_exists('nova_get_post')) {
             'name' => $post->title,
             'slug' => $post->slug,
             'published_at' => $post->published_at,
-            'data' => $post->post_content = json_decode($post->post_content),
+            'post-content' => $post->post_content = json_decode($post->post_content),
         ];
-    }
-}
-
-
-// ------------------------------
-// nova_resolve_template_field_value
-// ------------------------------
-
-if (!function_exists('nova_resolve_template_field_value')) {
-    function nova_resolve_template_field_value($field, $fieldValue, $templateModel)
-    {
-        return method_exists($field, 'resolveResponseValue')
-            ? $field->resolveResponseValue($fieldValue, $templateModel)
-            : $fieldValue;
-    }
-}
-
-
-// ------------------------------
-// nova_resolve_template_model_data
-// ------------------------------
-
-if (!function_exists('nova_resolve_template_model_data')) {
-    function nova_resolve_template_model_data(TemplateModel $templateModel)
-    {
-        // Find the Template class for the model
-        foreach (NovaBlog::getTemplates() as $tmpl) {
-            if ($tmpl::$name === $templateModel->template) $templateClass = $tmpl;
-        }
-
-        // Fail silently is template is no longer registered
-        if (!isset($templateClass)) return null;
-
-        // Get the template's fields
-        $fields = collect((new $templateClass($templateModel))->fields(request()));
-
-        $resolvedData = [];
-        foreach (((array)$templateModel->data) as $fieldAttribute => $fieldValue) {
-            $field = $fields->where('attribute', $fieldAttribute)->first();
-            if (!isset($field)) continue;
-
-            if ($field->component === 'nova-flexible-content') {
-                $resolvedData[$fieldAttribute] = nova_resolve_flexible_fields_data($field, $fieldValue, $templateModel);
-                continue;
-            }
-
-            $resolvedData[$fieldAttribute] = nova_resolve_template_field_value($field, $fieldValue, $templateModel);
-        }
-        return $resolvedData;
     }
 }

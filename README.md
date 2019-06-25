@@ -2,10 +2,6 @@
 
 This [Laravel Nova](https://nova.laravel.com) package allows you to create a blog and manage blogposts. The package is geared towards headless CMS's.
 
-## Features
-
-- Blogpost management
-
 ## Installation
 
 Install the package in a Laravel Nova project via Composer:
@@ -58,7 +54,7 @@ Example response:
     "created_at": "2019-06-19 11:58:56",
     "updated_at": "2019-06-19 11:59:23",
     "title": "Test post 1",
-    "slug": "testpost1",
+    "slug": "test-post-1",
     "post_content": [
       {
         "layout": "text",
@@ -86,7 +82,7 @@ Example response:
     "created_at": "2019-06-19 12:00:06",
     "updated_at": "2019-06-19 12:00:06",
     "title": "Test post 2",
-    "slug": "testpost2",
+    "slug": "tes-post-2",
     "post_content": [
       {
         "layout": "text",
@@ -112,11 +108,11 @@ Example response:
 ]
 ```
 
-### nova_get_post(\$postId)
+### nova_get_post_by_id(\$postId)
 
-The helper function `nova_get_post($postId)` finds and returns the post with the given ID.
+The helper function `nova_get_post_by_id($postId)` finds and returns the post with the given ID.
 
-Example response for querying page with ID `7` (`nova_get_post(7)`):
+Example response for querying page with ID `7` (`nova_get_post_by_id(7)`):
 
 ```json
 {
@@ -124,7 +120,7 @@ Example response for querying page with ID `7` (`nova_get_post(7)`):
   "name": "Test post 1",
   "slug": "testpost1",
   "published_at": "2019-06-19T09:00:00.000000Z",
-  "data": [
+  "post_content": [
     {
       "layout": "text",
       "key": "8965c7bfc0918086",
@@ -135,6 +131,37 @@ Example response for querying page with ID `7` (`nova_get_post(7)`):
     {
       "layout": "image",
       "key": "56f5bbe608b68cd6",
+      "attributes": {
+        "caption": "Test post image."
+      }
+    }
+  ]
+}
+```
+
+### nova_get_post_by_slug(\$slug)
+
+The helper function `nova_get_post_by_slug($slug)` finds and returns the post with the given slug.
+
+Example response for querying page with slug `test-post-3` (`nova_get_post_by_slug('test-post-3')`):
+
+```json
+{
+  "id": 14,
+  "name": "Test post 3",
+  "slug": "test-post-3",
+  "published_at": "2019-06-25T09:00:00.000000Z",
+  "post_content": [
+    {
+      "layout": "text",
+      "key": "fc64d73f1f7508c4",
+      "attributes": {
+        "text-content": "Test post content."
+      }
+    },
+    {
+      "layout": "image",
+      "key": "f8c9cc65b23b862a",
       "attributes": {
         "caption": "Test post image."
       }

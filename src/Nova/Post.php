@@ -34,8 +34,8 @@ class Post extends TemplateResource
             ID::make()->sortable(),
             Markdown::make('Title', 'title')->rules('required')->alwaysShow(),
 
-            Slug::make('Slug', 'slug'),
-            Datetime::make('Published at', 'published_at'),
+            Slug::make('Slug', 'slug')->rules('required'),
+            Datetime::make('Published at', 'published_at')->rules('required'),
 
             Flexible::make('Post content', 'post_content')
                 ->addLayout('Text section', 'text', [
