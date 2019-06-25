@@ -1,6 +1,6 @@
 # Nova Blog
 
-This [Laravel Nova](https://nova.laravel.com) package allows you to create a blog and manage blogposts. The package is geared towards headless CMS's.
+This [Laravel Nova](https://nova.laravel.com) package allows you to create a blog, manage blogposts and posts' content. The package is geared towards headless CMS's.
 
 ## Installation
 
@@ -36,8 +36,6 @@ public function tools()
     ];
 }
 ```
-
-## Usage
 
 ## Helper functions
 

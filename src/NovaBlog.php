@@ -37,6 +37,6 @@ class NovaBlog extends Tool
 
     public static function getPostsTableName(): string
     {
-        return config('nova-blog.table', 'nova_blog') . '_posts';
+        return config('nova-blog.table', 'nova_blog');
     }
 }
