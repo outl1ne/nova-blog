@@ -17,6 +17,7 @@ class NovaBlog extends Tool
     public function boot()
     {
         Nova::script('nova-slug-field', __DIR__ . '/../dist/js/slug-field.js');
+        Nova::script('nova-markdown-field', __DIR__ . '/../dist/js/markdown-field.js');
     }
 
     /**

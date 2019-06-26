@@ -14,6 +14,7 @@ use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Datetime;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
+use OptimistDigital\NovaBlog\Nova\Fields\Title;
 
 class Post extends TemplateResource
 {
@@ -32,12 +33,11 @@ class Post extends TemplateResource
 
         $fields = [
             ID::make()->sortable(),
-            Markdown::make('Title', 'title')->rules('required')->alwaysShow(),
-
+            Title::make('Title', 'title')->rules('required')->alwaysShow(),
             Slug::make('Slug', 'slug')->rules('required'),
             Datetime::make('Published at', 'published_at')->rules('required'),
 
-            Flexible::make('Post content', 'post_content')
+            Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
                     Markdown::make('Text content', 'text-content'),
                 ])
@@ -79,9 +79,9 @@ class Post extends TemplateResource
     {
         return [
             Heading::make('SEO'),
-            Text::make('SEO Title', 'seo_title'),
-            Text::make('SEO Description', 'seo_description'),
-            Image::make('SEO Image', 'seo_image'),
+            Text::make('SEO Title', 'seo_title')->hideFromIndex(),
+            Text::make('SEO Description', 'seo_description')->hideFromIndex(),
+            Image::make('SEO Image', 'seo_image')->hideFromIndex(),
         ];
     }
 
