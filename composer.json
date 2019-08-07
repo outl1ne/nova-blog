@@ -1,6 +1,6 @@
 {
   "name": "optimistdigital/nova-blog",
-  "description": "Package under development",
+  "description": "Blog manager for Laravel Nova",
   "keywords": [
     "laravel",
     "nova",
