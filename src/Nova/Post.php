@@ -36,6 +36,7 @@ class Post extends TemplateResource
             Title::make('Title', 'title')->rules('required')->alwaysShow(),
             Slug::make('Slug', 'slug')->rules('required'),
             Datetime::make('Published at', 'published_at')->rules('required'),
+            TextArea::make('Post introduction', 'post_introduction'),
 
             Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
