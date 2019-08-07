@@ -9,7 +9,7 @@
         :placeholder="field.name"
         v-model="value"
         @input="hasTouched = true"
-      >
+      />
 
       <p v-if="hasError" class="my-2 text-danger">{{ firstError }}</p>
     </template>
@@ -24,7 +24,7 @@ export default {
 
   data() {
     return {
-      value: '',
+      value: this.field.value || '',
       hasTouched: false,
     };
   },
@@ -35,7 +35,7 @@ export default {
 
   methods: {
     setInitialValue() {
-      return '';
+      return this.field.value;
     },
 
     fill(formData) {
