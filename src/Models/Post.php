@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+
     protected $casts = [
         'published_at' => 'datetime',
         'data' => 'object'
@@ -21,5 +22,15 @@ class Post extends Model
     protected static function boot()
     {
         parent::boot();
+
+        static::saving(function ($post) {
+            if ($post->is_pinned) {
+                Post::where('is_pinned', true)->each(function ($pinnedPost) {
+                    $pinnedPost->is_pinned = false;
+                    $pinnedPost->save();
+                });
+            }
+            return true;
+        });
     }
 }

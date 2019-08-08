@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -34,6 +35,7 @@ class Post extends TemplateResource
         $fields = [
             ID::make()->sortable(),
             Title::make('Title', 'title')->rules('required')->alwaysShow(),
+            Boolean::make('Is pinned', 'is_pinned'),
             Slug::make('Slug', 'slug')->rules('required'),
             Datetime::make('Published at', 'published_at')->rules('required'),
             TextArea::make('Post introduction', 'post_introduction'),
