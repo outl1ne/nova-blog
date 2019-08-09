@@ -42,7 +42,7 @@ class Post extends TemplateResource
 
             Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
-                    Markdown::make('Text content', 'text-content'),
+                    Markdown::make('Text content', 'text_content'),
                 ])
                 ->addLayout('Image section', 'image', [
                     Image::make('Image', 'image'),
@@ -54,8 +54,8 @@ class Post extends TemplateResource
                     Text::make('Video ID (YouTube)', 'video'),
                     Text::make('Video caption', 'caption')
                 ])
-                ->addLayout('Other embed media section', 'other-media', [
-                    Textarea::make('Embed media code (twitter, iframe, etc.)', 'media-code'),
+                ->addLayout('Other embed media section', 'other_media', [
+                    Textarea::make('Embed media code (twitter, iframe, etc.)', 'media_code'),
                     Text::make('Media caption', 'caption')
                 ])
         ];
