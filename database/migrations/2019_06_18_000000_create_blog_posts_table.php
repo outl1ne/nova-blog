@@ -21,7 +21,7 @@ class CreateBlogPostsTable extends Migration
             $table->string('title');
             $table->string('slug')->default('')->unique();
             $table->string('post_content');
-            $table->timestamp('published_at');
+            $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('seo_title')->nullable();
             $table->string('seo_description')->nullable();
             $table->string('seo_image')->nullable();
