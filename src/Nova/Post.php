@@ -13,7 +13,7 @@ use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
-use Laravel\Nova\Fields\Datetime;
+use Laravel\Nova\Fields\DateTime;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 use OptimistDigital\NovaBlog\Nova\Fields\Title;
 
@@ -37,7 +37,7 @@ class Post extends TemplateResource
             Title::make('Title', 'title')->rules('required')->alwaysShow(),
             Boolean::make('Is pinned', 'is_pinned'),
             Slug::make('Slug', 'slug')->rules('required'),
-            Datetime::make('Published at', 'published_at')->rules('required'),
+            DateTime::make('Published at', 'published_at')->rules('required'),
             TextArea::make('Post introduction', 'post_introduction'),
 
             Flexible::make('Post content', 'post_content')->hideFromIndex()
