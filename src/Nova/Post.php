@@ -45,7 +45,7 @@ class Post extends TemplateResource
                     Markdown::make('Text content', 'text_content'),
                 ])
                 ->addLayout('Image section', 'image', [
-                    Image::make('Image', 'image'),
+                    Image::make('Image', 'image')->deletable(false),
                     Text::make('Image caption', 'caption')
                 ])
                 ->addLayout('Video section', 'video', [
