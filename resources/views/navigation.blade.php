@@ -21,4 +21,17 @@
             Posts
         </router-link>
     </li>
+    <li class="leading-wide mb-4 text-sm">
+        <router-link
+            :to="{
+                name: 'index',
+                params: {
+                    resourceName: 'categories'
+                }
+            }"
+            class="text-white ml-8 no-underline dim"
+        >
+            Categories
+        </router-link>
+    </li>
 </ul>

@@ -13,10 +13,21 @@ class Post extends Model
         'data' => 'object'
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'published_at',
+    ];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->setTable(NovaBlog::getPostsTableName());
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     protected static function boot()

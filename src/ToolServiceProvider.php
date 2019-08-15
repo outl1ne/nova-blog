@@ -5,6 +5,7 @@ namespace OptimistDigital\NovaBlog;
 use Laravel\Nova\Nova;
 use Illuminate\Support\ServiceProvider;
 use OptimistDigital\NovaBlog\Nova\Post;
+use OptimistDigital\NovaBlog\Nova\Category;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -30,9 +31,11 @@ class ToolServiceProvider extends ServiceProvider
         });
 
         $postResource = config('nova-blog.post_resource') ?: Post::class;
+        $categoryResource = config('nova-blog.category_resource') ?: Category::class;
 
         Nova::resources([
-            $postResource
+            $postResource,
+            $categoryResource
         ]);
     }
 
