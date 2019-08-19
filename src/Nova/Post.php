@@ -40,7 +40,7 @@ class Post extends TemplateResource
             Slug::make('Slug', 'slug')->rules('required'),
             DateTime::make('Published at', 'published_at')->rules('required'),
             TextArea::make('Post introduction', 'post_introduction'),
-            BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category'),
+            BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
 
             Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
