@@ -33,6 +33,7 @@ if (!function_exists('nova_get_post_by_slug')) {
             'id' => $post->id,
             'category' => $post->category,
             'title' => $post->title,
+            'post_introduction' => $post->post_introduction,
             'slug' => $post->slug,
             'published_at' => $post->published_at,
             'post_content' => $post->post_content = json_decode($post->post_content),
