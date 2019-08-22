@@ -37,6 +37,11 @@ if (!function_exists('nova_get_post_by_slug')) {
             'slug' => $post->slug,
             'published_at' => $post->published_at,
             'post_content' => $post->post_content = json_decode($post->post_content),
+            'seo' => [
+                'title' => $post->seo_title,
+                'description' => $post->seo_description,
+                'image' => $post->seo_image,
+            ],
         ];
     }
 }
@@ -60,6 +65,11 @@ if (!function_exists('nova_get_post_by_id')) {
             'slug' => $post->slug,
             'published_at' => $post->published_at,
             'post-content' => $post->post_content = json_decode($post->post_content),
+            'seo' => [
+                'title' => $post->seo_title,
+                'description' => $post->seo_description,
+                'image' => $post->seo_image,
+            ],
         ];
     }
 }
