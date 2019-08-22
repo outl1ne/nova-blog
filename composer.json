@@ -29,8 +29,7 @@
   "require": {
     "php": ">=7.1.0",
     "doctrine/dbal": "^2.9",
-    "optimistdigital/nova-locale-field": "^1.1.1",
-    "whitecube/nova-flexible-content": "^0.1.6"
+    "optimistdigital/nova-locale-field": "^1.1.1"
   },
   "autoload": {
     "psr-4": {
