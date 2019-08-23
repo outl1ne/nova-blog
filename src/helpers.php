@@ -29,6 +29,19 @@ if (!function_exists('nova_get_post_by_slug')) {
         $post = Post::with('category')->where('slug', $slug)->firstOrFail();
         if (empty($post)) return null;
 
+        $seo = [
+            'title' => $post->seo_title,
+            'description' => $post->seo_description,
+        ];
+
+        if ($post->seo_image) {
+            $imagePath = storage_path('app/public/' . $post->seo_image);
+            $imageSize = getimagesize($imagePath);
+            $seo['image'] = $post->seo_image;
+            $seo['image_width'] = $imageSize[0];
+            $seo['image_height'] = $imageSize[1];
+        }
+
         return [
             'id' => $post->id,
             'category' => $post->category,
@@ -37,11 +50,7 @@ if (!function_exists('nova_get_post_by_slug')) {
             'slug' => $post->slug,
             'published_at' => $post->published_at,
             'post_content' => $post->post_content = json_decode($post->post_content),
-            'seo' => [
-                'title' => $post->seo_title,
-                'description' => $post->seo_description,
-                'image' => $post->seo_image,
-            ],
+            'seo' => $seo,
         ];
     }
 }
@@ -58,18 +67,28 @@ if (!function_exists('nova_get_post_by_id')) {
         $post = Post::with('category')->find($postId);
         if (empty($post)) return null;
 
+        $seo = [
+            'title' => $post->seo_title,
+            'description' => $post->seo_description,
+        ];
+
+        if ($post->seo_image) {
+            $imagePath = storage_path('app/public/' . $post->seo_image);
+            $imageSize = getimagesize($imagePath);
+            $seo['image'] = $post->seo_image;
+            $seo['image_width'] = $imageSize[0];
+            $seo['image_height'] = $imageSize[1];
+        }
+
         return [
             'id' => $post->id,
             'category' => $post->category,
-            'name' => $post->title,
+            'title' => $post->title,
+            'post_introduction' => $post->post_introduction,
             'slug' => $post->slug,
             'published_at' => $post->published_at,
-            'post-content' => $post->post_content = json_decode($post->post_content),
-            'seo' => [
-                'title' => $post->seo_title,
-                'description' => $post->seo_description,
-                'image' => $post->seo_image,
-            ],
+            'post_content' => $post->post_content = json_decode($post->post_content),
+            'seo' => $seo,
         ];
     }
 }
