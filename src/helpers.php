@@ -10,7 +10,7 @@ use OptimistDigital\NovaBlog\Models\Post;
 if (!function_exists('nova_get_blog_structure')) {
     function nova_get_blog_structure()
     {
-        return Post::with('category')->get()->map(function ($post) {
+        return Post::with('category')->orderBy('published_at', 'desc')->get()->map(function ($post) {
             $post->post_content = json_decode($post->post_content);
             return $post;
         });
