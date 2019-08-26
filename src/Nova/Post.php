@@ -50,12 +50,6 @@ class Post extends TemplateResource
                     Image::make('Image', 'image')->deletable(false),
                     Text::make('Image caption', 'caption')
                 ])
-                ->addLayout('Video section', 'video', [
-                    Text::make('Title'),
-                    Image::make('Video thumbnail', 'thumbnail'),
-                    Text::make('Video ID (YouTube)', 'video'),
-                    Text::make('Video caption', 'caption')
-                ])
                 ->addLayout('Other embed media section', 'other_media', [
                     Textarea::make('Embed media code (twitter, iframe, etc.)', 'media_code'),
                     Text::make('Media caption', 'caption')
