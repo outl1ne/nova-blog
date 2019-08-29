@@ -37,7 +37,7 @@ if (!function_exists('nova_get_post_by_slug')) {
         if ($post->seo_image) {
             $imagePath = storage_path('app/public/' . $post->seo_image);
             $imageSize = getimagesize($imagePath);
-            $seo['image'] = $post->seo_image;
+            $seo['image'] = Storage::disk('public')->url($post->seo_image);
             $seo['image_width'] = $imageSize[0];
             $seo['image_height'] = $imageSize[1];
         }
@@ -49,7 +49,7 @@ if (!function_exists('nova_get_post_by_slug')) {
             'post_introduction' => $post->post_introduction,
             'slug' => $post->slug,
             'published_at' => $post->published_at,
-            'post_content' => $post->post_content = json_decode($post->post_content),
+            'post_content' => nova_blog_map_content(json_decode($post->post_content)),
             'seo' => $seo,
         ];
     }
@@ -75,7 +75,7 @@ if (!function_exists('nova_get_post_by_id')) {
         if ($post->seo_image) {
             $imagePath = storage_path('app/public/' . $post->seo_image);
             $imageSize = getimagesize($imagePath);
-            $seo['image'] = $post->seo_image;
+            $seo['image'] = Storage::disk('public')->url($post->seo_image);
             $seo['image_width'] = $imageSize[0];
             $seo['image_height'] = $imageSize[1];
         }
@@ -87,8 +87,23 @@ if (!function_exists('nova_get_post_by_id')) {
             'post_introduction' => $post->post_introduction,
             'slug' => $post->slug,
             'published_at' => $post->published_at,
-            'post_content' => $post->post_content = json_decode($post->post_content),
+            'post_content' => nova_blog_map_content(json_decode($post->post_content)),
             'seo' => $seo,
         ];
+    }
+}
+
+if (!function_exists('nova_blog_map_content')) {
+    function nova_blog_map_content($content)
+    {
+        return collect($content)->map(function ($item) {
+            if ($item->layout === 'image') {
+                $output = clone $item;
+                $output->attributes->image = Storage::disk('public')->url($item->attributes->image);
+                return $output;
+            }
+
+            return $item;
+        });
     }
 }
