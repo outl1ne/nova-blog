@@ -12,7 +12,11 @@ if (!function_exists('nova_get_blog_structure')) {
     {
         return Post::with('category')->orderBy('published_at', 'desc')->get()->map(function ($post) {
             $post->post_content = nova_blog_map_content(json_decode($post->post_content));
-            $post->seo_image = Storage::disk('public')->url($post->seo_image);
+
+            if ($post->seo_image) {
+                $post->seo_image = Storage::disk('public')->url($post->seo_image);
+            }
+
             return $post;
         });
     }
