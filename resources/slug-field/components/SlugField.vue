@@ -7,8 +7,9 @@
         class="w-full form-control form-input form-input-bordered"
         :class="errorClasses"
         :placeholder="field.name"
-        v-model="value"
-        @input="hasTouched = true"
+        :value="value"
+        @input="onInput"
+        @blur="onBlur"
       />
 
       <p v-if="hasError" class="my-2 text-danger">{{ firstError }}</p>
@@ -34,21 +35,27 @@ export default {
   },
 
   methods: {
+    onInput(evt) {
+      this.value = evt.target.value;
+      this.hasTouched = true;
+    },
+
+    onBlur(evt) {
+      this.value = this.getSlug(this.value);
+      this.$forceUpdate();
+    },
+
     setInitialValue() {
       return this.field.value;
     },
 
-    fill(formData) {
-      formData.append(this.field.attribute, this.value || '');
-    },
-
     getSlug(text) {
-      return encodeURI(
-        text
-          .toLowerCase()
-          .replace(/\s/g, '-')
-          .replace(/\*/g, '')
-      );
+      return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\wüõöä\s$*_+~.()'"!\-:@]/g, '')
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
     },
 
     updateTitle(container) {
