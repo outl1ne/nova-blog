@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 
 class Category extends TemplateResource
 {
@@ -45,6 +46,7 @@ class Category extends TemplateResource
         return [
             ID::make()->sortable(),
             Text::make('Title', 'title'),
+            Slug::make('Slug', 'slug'),
         ];
     }
 

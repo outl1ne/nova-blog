@@ -50,19 +50,29 @@ export default {
     },
 
     getSlug(text) {
-      return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
+      return text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
         .replace(/[^\wüõöä\s$*_+~.()'"!\-:@]/g, '')
-        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-        .replace(/^-+/, '')             // Trim - from start of text
-        .replace(/-+$/, '');            // Trim - from end of text
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, ''); // Trim - from end of text
     },
 
-    updateTitle(container) {
+    updateTitle(titleContainer) {
       if (this.hasTouched) return;
 
       // Codemirror's textarea doesn't contain the entire value, so we look at the div content to get the actual value
-      const value = container.querySelector('.CodeMirror-code').innerText;
+      const codeMirrorElement = titleContainer.querySelector('.CodeMirror-code');
+
+      let value;
+
+      if (codeMirrorElement) {
+        value = codeMirrorElement.innerText;
+      } else {
+        value = titleContainer.querySelector('#title').value;
+      }
 
       this.value = this.getSlug(value);
     },
@@ -70,10 +80,16 @@ export default {
     autoFillFromTitle() {
       // Find the correct field based on the label
       const titleContainer = document.querySelector('label[for="title"]').parentElement.parentElement;
+
+      // We support titles which are markdown textareas, or titles, so we look for both
       // Codemirror creates two textareas, so we look for the one with tabindex which is the one that receives user input
-      const textarea = titleContainer.querySelector('textarea[tabindex="0"]');
-      textarea.addEventListener('input', evt => this.updateTitle(titleContainer));
-      textarea.addEventListener('change', evt => this.updateTitle(titleContainer));
+      const inputElement =
+        titleContainer.querySelector('textarea[tabindex="0"]') || titleContainer.querySelector('#title');
+
+      if (!inputElement) return;
+
+      inputElement.addEventListener('input', evt => this.updateTitle(titleContainer));
+      inputElement.addEventListener('change', evt => this.updateTitle(titleContainer));
     },
   },
 };
