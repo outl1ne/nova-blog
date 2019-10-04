@@ -12,4 +12,8 @@ class Category extends Model
         parent::__construct($attributes);
         $this->setTable(NovaBlog::getCategoriesTableName());
     }
+
+    public function parent() {
+        return $this->belongsTo(self::class, 'parent_id', 'id');
+    }
 }
