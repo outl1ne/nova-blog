@@ -12,6 +12,7 @@ return [
   */
 
   'table' => 'nova_blog_posts',
+  'table_categories' => 'nova_blog_categories',
 
   /*
   |--------------------------------------------------------------------------

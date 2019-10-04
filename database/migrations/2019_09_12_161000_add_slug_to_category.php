@@ -13,7 +13,8 @@ class AddSlugToCategory extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
+        $table = config('nova-blog.table_categories', 'nova_blog_categories');
+        Schema::table($table, function (Blueprint $table) {
             $table->string('slug')->default('');
         });
     }

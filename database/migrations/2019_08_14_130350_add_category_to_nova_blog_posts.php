@@ -16,8 +16,9 @@ class AddCategoryToNovaBlogPosts extends Migration
         $table = config('nova-blog.table', 'nova_blog_posts');
 
         Schema::table($table, function (Blueprint $table) {
+            $tableCategories = config('nova-blog.table_categories', 'nova_blog_categories');
             $table->bigInteger('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on($tableCategories);
         });
     }
 
@@ -28,7 +29,8 @@ class AddCategoryToNovaBlogPosts extends Migration
      */
     public function down()
     {
-        Schema::table('nova_blog_posts', function (Blueprint $table) {
+        $table = config('nova-blog.table', 'nova_blog_posts');
+        Schema::table($table, function (Blueprint $table) {
             //
         });
     }

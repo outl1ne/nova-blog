@@ -40,4 +40,10 @@ class NovaBlog extends Tool
     {
         return config('nova-blog.table', 'nova_blog');
     }
+
+
+    public static function getCategoriesTableName(): string
+    {
+        return config('nova-blog.table_categories', 'nova_blog_categories');
+    }
 }
