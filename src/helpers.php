@@ -10,7 +10,7 @@ use OptimistDigital\NovaBlog\Models\Post;
 if (!function_exists('nova_get_blog_structure')) {
     function nova_get_blog_structure()
     {
-        return Post::with('category')->orderBy('published_at', 'desc')->get()->map(function ($post) {
+        return Post::with('category')->where('published_at', '<', \DB::raw('NOW()'))->orderBy('published_at', 'desc')->get()->map(function ($post) {
             $post->post_content = nova_blog_map_content(json_decode($post->post_content));
 
             if ($post->seo_image) {
@@ -31,7 +31,7 @@ if (!function_exists('nova_get_post_by_slug')) {
     function nova_get_post_by_slug($slug)
     {
         if (empty($slug)) return null;
-        $post = Post::with('category')->where('slug', $slug)->firstOrFail();
+        $post = Post::with('category')->where('published_at', '<', \DB::raw('NOW()'))->where('slug', $slug)->firstOrFail();
         if (empty($post)) return null;
 
         $seo = [
@@ -69,7 +69,7 @@ if (!function_exists('nova_get_post_by_id')) {
     function nova_get_post_by_id($postId)
     {
         if (empty($postId)) return null;
-        $post = Post::with('category')->find($postId);
+        $post = Post::with('category')->where('published_at', '<', \DB::raw('NOW()'))->find($postId);
         if (empty($post)) return null;
 
         $seo = [
