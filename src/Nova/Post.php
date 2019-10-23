@@ -48,7 +48,8 @@ class Post extends TemplateResource
                 ])
                 ->addLayout('Image section', 'image', [
                     Image::make('Image', 'image')->deletable(false),
-                    Text::make('Image caption', 'caption')
+                    Text::make('Image caption', 'caption'),
+                    Text::make('Alt (image alternate text)', 'alt')
                 ])
                 ->addLayout('Other embed media section', 'other_media', [
                     Textarea::make('Embed media code (twitter, iframe, etc.)', 'media_code'),
