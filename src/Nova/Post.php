@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -57,6 +58,10 @@ class Post extends TemplateResource
                 ])
         ];
 
+        if (class_exists('\OptimistDigital\NovaLang\NovaLang')) {
+            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
+        }
+
         $fields[] = new Panel('SEO', $this->getSeoFields());
 
         if (count($templateFieldsAndPanels['fields']) > 0) {
@@ -88,5 +93,14 @@ class Post extends TemplateResource
     public function title()
     {
         return $this->name . ' (' . $this->slug . ')';
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $column = NovaBlog::getPostsTableName() . '.locale';
+        if (class_exists('\OptimistDigital\NovaLang\NovaLang'))
+            $query->where($column, nova_lang_get_active_locale())
+                  ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
+        return $query;
     }
 }
