@@ -40,4 +40,9 @@ class NovaBlog extends Tool
     {
         return config('nova-blog.table', 'nova_blog');
     }
+
+    public static function hasNovaLang(): bool
+    {
+        return class_exists('\OptimistDigital\NovaLang\NovaLang');
+    }
 }

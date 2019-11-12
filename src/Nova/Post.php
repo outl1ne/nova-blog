@@ -58,7 +58,7 @@ class Post extends TemplateResource
                 ])
         ];
 
-        if (class_exists('\OptimistDigital\NovaLang\NovaLang')) {
+        if (NovaBlog::hasNovaLang()) {
             $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
         }
 
@@ -98,7 +98,7 @@ class Post extends TemplateResource
     public static function indexQuery(NovaRequest $request, $query)
     {
         $column = NovaBlog::getPostsTableName() . '.locale';
-        if (class_exists('\OptimistDigital\NovaLang\NovaLang'))
+        if (NovaBlog::hasNovaLang())
             $query->where($column, nova_lang_get_active_locale())
                   ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
         return $query;
