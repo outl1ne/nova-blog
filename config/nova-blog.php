@@ -21,6 +21,18 @@ return [
   | Add a custom implementation of the Post resource
   |
   */
+
   'post_resource' => null,
+
+  /*
+  |--------------------------------------------------------------------------
+  | Drafts enabled
+  |--------------------------------------------------------------------------
+  |
+  | If set to true, drafting capabilities will be available.
+  |
+  */
+
+    'drafts_enabled' => false,
 
 ];

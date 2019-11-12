@@ -11,8 +11,11 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 use Laravel\Nova\Panel;
+use OptimistDigital\NovaBlog\Nova\Fields\DraftButton;
 use OptimistDigital\NovaBlog\NovaBlog;
+use OptimistDigital\NovaBlog\Nova\Fields\PublishedField;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\DateTime;
@@ -62,6 +65,16 @@ class Post extends TemplateResource
             $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
         }
 
+        if (NovaBlog::draftsEnabled()) {
+            $isDraft = (isset($this->draft_parent_id) || (!isset($this->draft_parent_id) && !$this->published && isset($this->id)));
+
+            if (!(!$isDraft && ($request instanceof ResourceDetailRequest)) || isset($this->childDraft)) {
+                $fields[] = DraftButton::make('Draft');
+            }
+
+            $fields[] = PublishedField::make('State', 'published');
+        }
+
         $fields[] = new Panel('SEO', $this->getSeoFields());
 
         if (count($templateFieldsAndPanels['fields']) > 0) {
@@ -98,6 +111,7 @@ class Post extends TemplateResource
     public static function indexQuery(NovaRequest $request, $query)
     {
         $column = NovaBlog::getPostsTableName() . '.locale';
+        $query->doesntHave('childDraft');
         if (NovaBlog::hasNovaLang())
             $query->where($column, nova_lang_get_active_locale())
                   ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Tool API Routes
@@ -11,6 +13,6 @@
 |
 */
 
-// Route::get('/endpoint', function (Request $request) {
-//     //
-// });
+
+Route::post('/publish/{postId}', 'OptimistDigital\NovaBlog\Http\PostController@publishPost');
+

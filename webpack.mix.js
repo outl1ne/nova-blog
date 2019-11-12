@@ -3,4 +3,6 @@ let mix = require('laravel-mix');
 mix
   .setPublicPath('dist')
   .js('resources/slug-field/slug-field.js', 'js')
-  .js('resources/markdown-field/markdown-field.js', 'js');
+  .js('resources/markdown-field/markdown-field.js', 'js')
+  .js('resources/draft-button-posts/draft-button-posts.js', 'js')
+  .js('resources/published-field-posts/published-field-posts.js', 'js');
