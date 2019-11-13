@@ -4,6 +4,7 @@ namespace OptimistDigital\NovaBlog;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use OptimistDigital\NovaBlog\Models\Post;
 
 class NovaBlog extends Tool
 {
@@ -51,5 +52,11 @@ class NovaBlog extends Tool
     public static function draftsEnabled()
     {
         return config('nova-blog.drafts_enabled', false);
+    }
+
+    public static function getPageUrl(Post $post)
+    {
+        $getPostUrl = config('nova-blog.page_url');
+        return isset($getPostUrl) ? call_user_func($getPostUrl, $post) : null;
     }
 }
