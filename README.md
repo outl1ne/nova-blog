@@ -37,6 +37,31 @@ public function tools()
 }
 ```
 
+### Toggling page draft feature
+
+Draft feature allows you to create previews of pages before publishing them. By default this feature is disabled but can be enabled through the config.
+
+```php
+// in /config/nova-blog.php
+
+// ...
+    'drafts_enabled' => true,
+// ...
+```
+
+### Add links to front-end pages
+
+To display a link to the actual page next to the slug, add or overwrite the closure in `config/nova-blog.php` for the key `page_url`.
+
+```php
+// in /config/nova-page-manager.php
+
+// ...
+'page_url' => function (Post $post) {
+  return env('FRONTEND_URL') . '/' . $post->slug;
+},
+```
+
 ## Helper functions
 
 ### nova_get_blog_structure()

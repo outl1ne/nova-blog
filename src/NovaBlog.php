@@ -4,6 +4,7 @@ namespace OptimistDigital\NovaBlog;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use OptimistDigital\NovaBlog\Models\Post;
 
 class NovaBlog extends Tool
 {
@@ -18,6 +19,8 @@ class NovaBlog extends Tool
     {
         Nova::script('nova-slug-field', __DIR__ . '/../dist/js/slug-field.js');
         Nova::script('nova-markdown-field', __DIR__ . '/../dist/js/markdown-field.js');
+        Nova::script('nova-draft-button-posts', __DIR__ . '/../dist/js/draft-button-posts.js');
+        Nova::script('nova-published-field-posts', __DIR__ . '/../dist/js/published-field-posts.js');
     }
 
     /**
@@ -44,5 +47,16 @@ class NovaBlog extends Tool
     public static function hasNovaLang(): bool
     {
         return class_exists('\OptimistDigital\NovaLang\NovaLang');
+    }
+
+    public static function draftsEnabled()
+    {
+        return config('nova-blog.drafts_enabled', false);
+    }
+
+    public static function getPageUrl(Post $post)
+    {
+        $getPostUrl = config('nova-blog.page_url');
+        return isset($getPostUrl) ? call_user_func($getPostUrl, $post) : null;
     }
 }

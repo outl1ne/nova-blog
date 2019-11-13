@@ -1,4 +1,6 @@
 {
+    "/js/published-field-posts.js": "/js/published-field-posts.js",
+    "/js/draft-button-posts.js": "/js/draft-button-posts.js",
     "/js/slug-field.js": "/js/slug-field.js",
     "/js/markdown-field.js": "/js/markdown-field.js"
 }

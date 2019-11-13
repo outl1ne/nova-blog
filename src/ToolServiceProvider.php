@@ -2,10 +2,12 @@
 
 namespace OptimistDigital\NovaBlog;
 
+use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Nova;
 use Illuminate\Support\ServiceProvider;
 use OptimistDigital\NovaBlog\Nova\Post;
 use OptimistDigital\NovaBlog\Nova\Category;
+use OptimistDigital\NovaBlog\Http\Middleware\Authorize;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -49,5 +51,8 @@ class ToolServiceProvider extends ServiceProvider
         if ($this->app->routesAreCached()) {
             return;
         }
+        Route::middleware(['nova', Authorize::class])
+            ->prefix('nova-vendor/nova-blog')
+            ->group(__DIR__ . '/../routes/api.php');
     }
 }

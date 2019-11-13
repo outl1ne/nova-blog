@@ -11,8 +11,11 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 use Laravel\Nova\Panel;
+use OptimistDigital\NovaBlog\Nova\Fields\DraftButton;
 use OptimistDigital\NovaBlog\NovaBlog;
+use OptimistDigital\NovaBlog\Nova\Fields\PublishedField;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\DateTime;
@@ -38,7 +41,22 @@ class Post extends TemplateResource
             ID::make()->sortable(),
             Title::make('Title', 'title')->rules('required')->alwaysShow(),
             Boolean::make('Is pinned', 'is_pinned'),
-            Slug::make('Slug', 'slug')->rules('required'),
+            Slug::make('Slug', 'slug')->rules('required')->onlyOnForms(),
+            Text::make('Slug', function () {
+                $previewToken = $this->childDraft ? $this->childDraft->preview_token : $this->preview_token;
+                $previewPart = $previewToken ? '?preview=' . $previewToken : '';
+                $pagePath = $this->resource->slug;
+                $pageBaseUrl = NovaBlog::getPageUrl($this->resource);
+                $pageUrl = !empty($pageBaseUrl) ? $pageBaseUrl . $previewPart : null;
+                $buttonText = $this->resource->isDraft() ? 'View draft' : 'View';
+
+                if (empty($pageBaseUrl)) return "<span class='bg-40 text-sm py-1 px-2 rounded-lg whitespace-no-wrap'>$pagePath</span>";
+
+                return "<div class='whitespace-no-wrap'>
+                            <span class='bg-40 text-sm py-1 px-2 rounded-lg'>$pagePath</span>
+                            <a target='_blank' href='$pageUrl' class='text-sm py-1 px-2 text-primary no-underline dim font-bold'>$buttonText</a>
+                        </div>";
+            })->asHtml()->exceptOnForms(),
             DateTime::make('Published at', 'published_at')->rules('required'),
             TextArea::make('Post introduction', 'post_introduction'),
             BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
@@ -60,6 +78,16 @@ class Post extends TemplateResource
 
         if (NovaBlog::hasNovaLang()) {
             $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
+        }
+
+        if (NovaBlog::draftsEnabled()) {
+            $isDraft = (isset($this->draft_parent_id) || (!isset($this->draft_parent_id) && !$this->published && isset($this->id)));
+
+            if (!(!$isDraft && ($request instanceof ResourceDetailRequest)) || isset($this->childDraft)) {
+                $fields[] = DraftButton::make('Draft');
+            }
+
+            $fields[] = PublishedField::make('State', 'published');
         }
 
         $fields[] = new Panel('SEO', $this->getSeoFields());
@@ -98,9 +126,10 @@ class Post extends TemplateResource
     public static function indexQuery(NovaRequest $request, $query)
     {
         $column = NovaBlog::getPostsTableName() . '.locale';
+        $query->doesntHave('childDraft');
         if (NovaBlog::hasNovaLang())
             $query->where($column, nova_lang_get_active_locale())
-                  ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
+                ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
         return $query;
     }
 }

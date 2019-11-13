@@ -21,6 +21,35 @@ return [
   | Add a custom implementation of the Post resource
   |
   */
+
   'post_resource' => null,
 
+  /*
+  |--------------------------------------------------------------------------
+  | Drafts enabled
+  |--------------------------------------------------------------------------
+  |
+  | If set to true, drafting capabilities will be available.
+  |
+  */
+
+    'drafts_enabled' => false,
+
+  /*
+  |--------------------------------------------------------------------------
+  | Page URL
+  |--------------------------------------------------------------------------
+  |
+  | If a closure is specified, a link to the page is shown next to
+  | the page slug. The closure accepts a Page model as a paramater.
+  |
+  | Set to `null` if the link should not be displayed.
+  |
+  */
+
+    'page_url' => function (\OptimistDigital\NovaBlog\Models\Post $page) {
+        // For example:
+        // return env('FRONTEND_URL') . $page->path;
+        return null;
+    }
 ];

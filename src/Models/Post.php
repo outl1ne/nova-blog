@@ -2,6 +2,7 @@
 
 namespace OptimistDigital\NovaBlog\Models;
 
+use Illuminate\Support\Str;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,7 +42,42 @@ class Post extends Model
                     $pinnedPost->save();
                 });
             }
+            if (isset($post->draft) && NovaBlog::draftsEnabled()) {
+                unset($post['draft']);
+                return Post::createDraft($post);
+            }
             return true;
         });
+    }
+
+    private static function createDraft($postData)
+    {
+        if (isset($postData->id)) {
+            $newPost = $postData->replicate();
+            $newPost->published = false;
+            $newPost->draft_parent_id = $postData->id;
+            $newPost->preview_token = Str::random(20);
+            $newPost->save();
+            return false;
+        }
+
+        $postData->published = false;
+        $postData->preview_token = Str::random(20);
+        return true;
+    }
+
+    public function draftParent()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    public function childDraft()
+    {
+        return $this->hasOne(Post::class, 'draft_parent_id', 'id');
+    }
+
+    public function isDraft()
+    {
+        return isset($this->preview_token) ? true : false;
     }
 }
