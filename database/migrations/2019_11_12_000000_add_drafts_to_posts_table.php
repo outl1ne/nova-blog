@@ -33,7 +33,7 @@ class AddDraftsToPostsTable extends Migration
      */
     public function down()
     {
-        $postsTableName = NovaBlog::getPagesTableName();
+        $postsTableName = NovaBlog::getPostsTableName();
 
         Schema::table($postsTableName, function ($table) use ($postsTableName) {
             $table->dropForeign($postsTableName.'_draft_parent_id_foreign');
