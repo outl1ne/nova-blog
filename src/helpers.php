@@ -41,10 +41,12 @@ if (!function_exists('nova_get_post_by_slug')) {
 
         if ($post->seo_image) {
             $imagePath = storage_path('app/public/' . $post->seo_image);
-            $imageSize = getimagesize($imagePath);
-            $seo['image'] = Storage::disk('public')->url($post->seo_image);
-            $seo['image_width'] = $imageSize[0];
-            $seo['image_height'] = $imageSize[1];
+            if (file_exists($imagePath)) {
+                $imageSize = getimagesize($imagePath);
+                $seo['image'] = Storage::disk('public')->url($post->seo_image);
+                $seo['image_width'] = $imageSize[0];
+                $seo['image_height'] = $imageSize[1];
+            }
         }
 
         return [
