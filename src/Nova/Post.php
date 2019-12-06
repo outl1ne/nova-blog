@@ -41,7 +41,7 @@ class Post extends TemplateResource
             ID::make()->sortable(),
             Title::make('Title', 'title')->rules('required')->alwaysShow(),
             Boolean::make('Is pinned', 'is_pinned'),
-            Slug::make('Slug', 'slug')->rules('required')->onlyOnForms(),
+            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash', 'lowercase_string')->onlyOnForms(),
             Text::make('Slug', function () {
                 $previewToken = $this->childDraft ? $this->childDraft->preview_token : $this->preview_token;
                 $previewPart = $previewToken ? '?preview=' . $previewToken : '';
