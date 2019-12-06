@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.2.0] - 2019-11-13
+
+### Changed
+- Migrations are now loaded automatically and can be deleted from your project. This aims to reduce the number of migration files inside the end project's folder and keep them more relevant.     
+     -Migration files to delete: 
+     ```
+      2019_06_18_000000_create_blog_posts_table.php
+      2019_08_07_000000_add_post_introduction_to_posts_table.php
+      2019_08_08_000000_add_pinned_to_posts_table.php
+      2019_08_13_073119_change_post_content_datatype.php
+      2019_08_14_121846_create_categories_table.php
+      2019_08_14_130350_add_category_to_nova_blog_posts.php
+      2019_09_12_161000_add_slug_to_category.php
+      2019_09_19_073119_change_post_introduction_datatype.php
+      2019_11_11_000000_add_locale_to_posts_table.php
+      2019_11_12_000000_add_drafts_to_posts_table.php
+
 ## [5.0.0] - 2019-11-13
 
 ### Added
@@ -19,3 +36,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 [5.0.0]: https://github.com/optimistdigital/nova-blog/compare/5.0.0...4.1.0
+[5.2.0]: https://github.com/optimistdigital/nova-blog/compare/5.2.0...5.1.0
