@@ -47,9 +47,9 @@ return [
   |
   */
 
-    'page_url' => function (\OptimistDigital\NovaBlog\Models\Post $page) {
+    'page_url' => function (\OptimistDigital\NovaBlog\Models\Post $post) {
         // For example:
-        // return env('FRONTEND_URL') . $page->path;
+        // return env('FRONTEND_URL') . $post->slug;
         return null;
     }
 ];

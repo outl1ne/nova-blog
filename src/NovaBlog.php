@@ -38,7 +38,7 @@ class NovaBlog extends Tool
 
     public static function getPostsTableName(): string
     {
-        return config('nova-blog.table', 'nova_blog');
+        return config('nova-blog.table', 'nova_blog_posts');
     }
 
     public static function hasNovaLang(): bool

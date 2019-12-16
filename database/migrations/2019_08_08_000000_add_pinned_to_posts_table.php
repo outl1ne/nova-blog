@@ -27,6 +27,10 @@ class AddPinnedToPostsTable extends Migration
      */
     public function down()
     {
-        //
+        $table = config('nova-blog.table', 'nova_blog_posts');
+
+        Schema::table($table, function (Blueprint $table) {
+            $table->dropColumn('is_pinned');
+        });
     }
 }
