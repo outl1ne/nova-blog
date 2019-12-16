@@ -1,6 +1,16 @@
 # Changelog
 
-## [5.3.0] - 2019-11-13
+## [5.4.0] - 2019-12-16
+
+### Changed
+- Reduced scripts amount from 4 to 1
+
+### Fixed
+- Fixed down migrations
+- Fixed config example typo
+
+
+## [5.3.0] - 2019-12-13
 
 ### Changed
 - Removed alphanumeric & lowercase_string slug validation from front-end and moved it to back-end
