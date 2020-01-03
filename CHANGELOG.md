@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.6.0] - 2019-12-16
+
+### Added
+- Users can now configure categories table name.
+- The default name for categories table will now be `nova-blog-categories`.
+- Added new migration to change categories table name to the one assigned in config file. 
+If you wish to keep your previous table name, please change the `nova-blog.php` config file
+before migrating. 
+
+### Changed
+- Changed `table` name inside config. `table -> blog_posts_table`
+
+### Removed
+- Removed `getPostsTableName()` function
+
+
+
 ## [5.5.0] - 2019-12-16
 
 ### Fixed
@@ -56,6 +73,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[5.6.0]: https://github.com/optimistdigital/nova-blog/compare/5.5.0...5.6.0
 [5.5.0]: https://github.com/optimistdigital/nova-blog/compare/5.4.0...5.5.0
 [5.4.0]: https://github.com/optimistdigital/nova-blog/compare/5.3.0...5.4.0
 [5.3.0]: https://github.com/optimistdigital/nova-blog/compare/5.2.0...5.3.0
