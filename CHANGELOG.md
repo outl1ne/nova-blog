@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.6.0] - 2019-12-16
+## [5.6.0] - 2019-01-03
 
 ### Added
 - Users can now configure categories table name.
@@ -17,7 +17,7 @@ before migrating.
 
 
 
-## [5.5.0] - 2019-12-16
+## [5.5.0] - 2019-01-02
 
 ### Fixed
 - Fixed [nova-locale-field](https://github.com/optimistdigital/nova-locale-field) package version.
