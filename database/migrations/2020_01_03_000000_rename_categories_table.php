@@ -16,7 +16,9 @@ class RenameCategoriesTable extends Migration
     {
         $categoriesTable = config('nova-blog.blog_categories_table', 'nova_blog_categories');
         if (!Schema::hasTable($categoriesTable)) {
-            Schema::rename('categories', $categoriesTable);
+            if (Schema::hasTable('categories')) {
+                Schema::rename('categories', $categoriesTable);
+            }
         }
     }
 
