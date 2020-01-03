@@ -13,7 +13,9 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        $table = config('nova-blog.blog_categories_table', 'nova_blog_categories');
+
+        Schema::create($table, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('title');
@@ -27,6 +29,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists(config('nova-blog.blog_categories_table', 'nova_blog_categories'));
     }
 }
