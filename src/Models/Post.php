@@ -23,7 +23,7 @@ class Post extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(NovaBlog::getPostsTableName());
+        $this->setTable(config('nova-blog.blog_posts_table', 'nova_blog_posts'));
     }
 
     public function category()
