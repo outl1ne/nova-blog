@@ -14,9 +14,9 @@ class ChangePostIntroductionDatatype extends Migration
     public function up()
     {
 
-        $table = config('nova-blog.table', 'nova_blog_posts');
+        $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
-        Schema::table($table, function (Blueprint $table) {
+        Schema::table($postsTable, function (Blueprint $table) {
             $table->longText('post_introduction')->change();
         });
     }
