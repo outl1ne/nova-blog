@@ -13,7 +13,8 @@ class AddSlugToCategory extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
+        $categoriesTable = config('nova-blog.blog_categories_table', 'nova_blog_categories');
+        Schema::table($categoriesTable, function (Blueprint $table) {
             $table->string('slug')->default('');
         });
     }
@@ -25,7 +26,8 @@ class AddSlugToCategory extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
+        $categoriesTable = config('nova-blog.blog_categories_table', 'nova_blog_categories');
+        Schema::table($categoriesTable, function (Blueprint $table) {
             $table->dropColumn('slug');
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +14,7 @@ class CreateBlogPostsTable extends Migration
      */
     public function up()
     {
-        $table = config('nova-blog.table', 'nova_blog_posts');
+        $table = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
         Schema::create($table, function (Blueprint $table) {
             $table->bigIncrements('id');

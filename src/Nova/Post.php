@@ -33,7 +33,7 @@ class Post extends TemplateResource
     public function fields(Request $request)
     {
         // Get base data
-        $tableName = NovaBlog::getPostsTableName();
+        $tableName = config('nova-blog.blog_posts_table', 'nova_blog_posts');
         $templateClass = $this->getTemplateClass();
         $templateFieldsAndPanels = $this->getTemplateFieldsAndPanels();
 
@@ -125,7 +125,7 @@ class Post extends TemplateResource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        $column = NovaBlog::getPostsTableName() . '.locale';
+        $column = config('nova-blog.blog_posts_table', 'nova_blog_posts') . '.locale';
         $query->doesntHave('childDraft');
         if (NovaBlog::hasNovaLang())
             $query->where($column, nova_lang_get_active_locale())

@@ -14,7 +14,7 @@ class ChangePostContentDatatype extends Migration
     public function up()
     {
 
-        $table = config('nova-blog.table', 'nova_blog_posts');
+        $table = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
         Schema::table($table, function (Blueprint $table) {
             $table->longText('post_content')->change();

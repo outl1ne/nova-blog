@@ -13,7 +13,7 @@ class AddPostIntroductionToPostsTable extends Migration
      */
     public function up()
     {
-        $table = config('nova-blog.table', 'nova_blog_posts');
+        $table = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
         Schema::table($table, function (Blueprint $table) {
             $table->string('post_introduction')->nullable();
@@ -27,7 +27,7 @@ class AddPostIntroductionToPostsTable extends Migration
      */
     public function down()
     {
-        $table = config('nova-blog.table', 'nova_blog_posts');
+        $table = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
         Schema::table($table, function (Blueprint $table) {
             $table->dropColumn('post_introduction');

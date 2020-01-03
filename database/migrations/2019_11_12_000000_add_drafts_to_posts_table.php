@@ -14,15 +14,15 @@ class AddDraftsToPostsTable extends Migration
      */
     public function up()
     {
-        $postsTableName = NovaBlog::getPostsTableName();
+        $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
-        Schema::table($postsTableName, function ($table) use ($postsTableName) {
+        Schema::table($postsTable, function ($table) use ($postsTable) {
             $table->string('preview_token')->nullable();
             $table->boolean('published')->default(true);
             $table->bigInteger('draft_parent_id')->nullable()->unsigned();
-            $table->foreign('draft_parent_id')->references('id')->on($postsTableName)->onDelete('cascade');
-            $table->dropUnique("{$postsTableName}_slug_unique");
-            $table->unique(['slug', 'published'], "{$postsTableName}_locale_slug_published_unique");
+            $table->foreign('draft_parent_id')->references('id')->on($postsTable)->onDelete('cascade');
+            $table->dropUnique("{$postsTable}_slug_unique");
+            $table->unique(['slug', 'published'], "{$postsTable}_locale_slug_published_unique");
         });
     }
 
@@ -33,15 +33,15 @@ class AddDraftsToPostsTable extends Migration
      */
     public function down()
     {
-        $postsTableName = NovaBlog::getPostsTableName();
+        $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
-        Schema::table($postsTableName, function ($table) use ($postsTableName) {
-            $table->dropForeign($postsTableName.'_draft_parent_id_foreign');
+        Schema::table($postsTable, function ($table) use ($postsTable) {
+            $table->dropForeign($postsTable.'_draft_parent_id_foreign');
             $table->dropColumn('draft_parent_id');
             $table->dropColumn('published');
             $table->dropColumn('preview_token');
-            $table->dropUnique("{$postsTableName}_locale_slug_published_unique");
-            $table->unique(['slug'], "{$postsTableName}_slug_unique");
+            $table->dropUnique("{$postsTable}_locale_slug_published_unique");
+            $table->unique(['slug'], "{$postsTable}_slug_unique");
         });
     }
 }

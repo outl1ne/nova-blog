@@ -13,11 +13,12 @@ class AddCategoryToNovaBlogPosts extends Migration
      */
     public function up()
     {
-        $table = \OptimistDigital\NovaBlog\NovaBlog::getPostsTableName();
+        $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
+        $categoriesTable = config('nova-blog.blog_categories_table', 'nova_blog_categories');
 
-        Schema::table($table, function (Blueprint $table) {
+        Schema::table($postsTable, function (Blueprint $table) use ($categoriesTable){
             $table->bigInteger('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on($categoriesTable);
         });
     }
 
@@ -28,9 +29,8 @@ class AddCategoryToNovaBlogPosts extends Migration
      */
     public function down()
     {
-        $table = \OptimistDigital\NovaBlog\NovaBlog::getPostsTableName();
-
-        Schema::table('nova_blog_posts', function (Blueprint $table) {
+        $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
+        Schema::table($postsTable, function (Blueprint $table) {
             $table->dropForeign(['category_id']);
             $table->dropColumn('category_id');
         });
