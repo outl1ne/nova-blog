@@ -42,33 +42,8 @@ class Post extends Model
                     $pinnedPost->save();
                 });
             }
-            if (isset($post->draft) && NovaBlog::draftsEnabled()) {
-                unset($post['draft']);
-                return Post::createDraft($post);
-            }
             return true;
         });
-    }
-
-    private static function createDraft($postData)
-    {
-        if (isset($postData->id)) {
-            $newPost = $postData->replicate();
-            $newPost->published = false;
-            $newPost->draft_parent_id = $postData->id;
-            $newPost->preview_token = Str::random(20);
-            $newPost->save();
-            return false;
-        }
-
-        $postData->published = false;
-        $postData->preview_token = Str::random(20);
-        return true;
-    }
-
-    public function draftParent()
-    {
-        return $this->belongsTo(Post::class);
     }
 
     public function childDraft()
