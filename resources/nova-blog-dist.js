@@ -8,9 +8,6 @@ Nova.booting((Vue, router, store) => {
 
     Vue.component('index-markdown-field', require('./markdown-field/components/IndexMarkdownField'));
 
-    Vue.component('form-draft-button-posts', require('./draft-button-posts/components/FormButton'));
-    Vue.component('detail-draft-button-posts', require('./draft-button-posts/components/DetailButton'));
-
     router.addRoutes([
         {
             name: 'nova-blog',
