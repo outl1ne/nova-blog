@@ -80,16 +80,6 @@ class Post extends TemplateResource
             $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
         }
 
-        if (NovaBlog::draftsEnabled()) {
-            $isDraft = (isset($this->draft_parent_id) || (!isset($this->draft_parent_id) && !$this->published && isset($this->id)));
-
-            if (!(!$isDraft && ($request instanceof ResourceDetailRequest)) || isset($this->childDraft)) {
-                $fields[] = DraftButton::make('Draft');
-            }
-
-            $fields[] = PublishedField::make('State', 'published');
-        }
-
         $fields[] = new Panel('SEO', $this->getSeoFields());
 
         if (count($templateFieldsAndPanels['fields']) > 0) {
