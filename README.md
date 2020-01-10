@@ -39,14 +39,10 @@ public function tools()
 
 ### Toggling page draft feature
 
-Draft feature allows you to create previews of pages before publishing them. By default this feature is disabled but can be enabled through the config.
+Draft feature allows you to create previews of pages before publishing them. By default this feature is disabled but can be enabled by installing [nova-drafts](https://github.com/optimistdigital/nova-drafts) package.
 
-```php
-// in /config/nova-blog.php
-
-// ...
-    'drafts_enabled' => true,
-// ...
+```bash
+composer require optimistdigital/nova-drafts
 ```
 
 ### Add links to front-end pages
