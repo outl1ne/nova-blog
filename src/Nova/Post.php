@@ -11,11 +11,8 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\NovaBlog;
-use OptimistDigital\NovaDrafts\DraftButton;
-use OptimistDigital\NovaDrafts\PublishedField;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\DateTime;
@@ -79,9 +76,9 @@ class Post extends TemplateResource
             $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
         }
 
-        if (NovaBlog::draftsEnabled()) {
-            $fields[] = DraftButton::make('Draft');
-            $fields[] = PublishedField::make('State', 'published');
+        if (NovaBlog::hasNovaDrafts()) {
+            $fields[] = \OptimistDigital\NovaDrafts\DraftButton::make('Draft');
+            $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make('State', 'published');
         }
 
         $fields[] = new Panel('SEO', $this->getSeoFields());
