@@ -43,7 +43,7 @@ class NovaBlog extends Tool
 
     public static function hasNovaDrafts()
     {
-        return class_exists('\OptimistDigital\NovaDrafts');
+        return class_exists('\OptimistDigital\NovaDrafts\DraftButton') || class_exists('\OptimistDigital\NovaDrafts\PublishedField');
     }
 
     public static function getPageUrl(Post $post)
