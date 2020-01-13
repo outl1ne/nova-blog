@@ -39,7 +39,7 @@ public function tools()
 
 ### Toggling page draft feature
 
-Draft feature allows you to create previews of pages before publishing them. By default this feature is disabled but can be enabled by installing [nova-drafts](https://github.com/optimistdigital/nova-drafts) package.
+Draft feature allows you to create previews of resources before publishing them. By default this feature is disabled but can be enabled by installing [nova-drafts](https://github.com/optimistdigital/nova-drafts) package.
 
 ```bash
 composer require optimistdigital/nova-drafts

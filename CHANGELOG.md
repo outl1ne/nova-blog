@@ -4,12 +4,11 @@
 
 ### Added
 - Added [nova-drafts](https://github.com/optimistdigital/nova-drafts) package to replace previous drafts logic.   
- **All functionality will remain.**
+ **All previous functionality will remain the same.**
 
 ### Removed
 - `NovaBlog::draftsEnabled()` and replaced it with `NovaBlog::hasNovaDrafts`.
 - Removed `drafts_enabled` from config. Now it checks whether user has the package installed or not.
-- Removed most of draft logic, that was replaced by [nova-drafts](https://github.com/optimistdigital/nova-drafts)
 
 ## [5.6.0] - 2019-01-03
 
