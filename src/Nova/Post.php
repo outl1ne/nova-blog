@@ -11,11 +11,8 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 use Laravel\Nova\Panel;
-use OptimistDigital\NovaBlog\Nova\Fields\DraftButton;
 use OptimistDigital\NovaBlog\NovaBlog;
-use OptimistDigital\NovaBlog\Nova\Fields\PublishedField;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\DateTime;
@@ -58,9 +55,8 @@ class Post extends TemplateResource
                         </div>";
             })->asHtml()->exceptOnForms(),
             DateTime::make('Published at', 'published_at')->rules('required'),
-            TextArea::make('Post introduction', 'post_introduction'),
+            Textarea::make('Post introduction', 'post_introduction'),
             BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
-
             Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
                     Markdown::make('Text content', 'text_content'),
@@ -80,14 +76,9 @@ class Post extends TemplateResource
             $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
         }
 
-        if (NovaBlog::draftsEnabled()) {
-            $isDraft = (isset($this->draft_parent_id) || (!isset($this->draft_parent_id) && !$this->published && isset($this->id)));
-
-            if (!(!$isDraft && ($request instanceof ResourceDetailRequest)) || isset($this->childDraft)) {
-                $fields[] = DraftButton::make('Draft');
-            }
-
-            $fields[] = PublishedField::make('State', 'published');
+        if (NovaBlog::hasNovaDrafts()) {
+            $fields[] = \OptimistDigital\NovaDrafts\DraftButton::make('Draft');
+            $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make('State', 'published');
         }
 
         $fields[] = new Panel('SEO', $this->getSeoFields());

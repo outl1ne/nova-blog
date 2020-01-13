@@ -41,9 +41,9 @@ class NovaBlog extends Tool
         return class_exists('\OptimistDigital\NovaLang\NovaLang');
     }
 
-    public static function draftsEnabled()
+    public static function hasNovaDrafts()
     {
-        return config('nova-blog.drafts_enabled', false);
+        return class_exists('\OptimistDigital\NovaDrafts\DraftButton') || class_exists('\OptimistDigital\NovaDrafts\PublishedField');
     }
 
     public static function getPageUrl(Post $post)
