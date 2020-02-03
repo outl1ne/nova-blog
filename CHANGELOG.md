@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.0.1] - 2020-02-01
+
+### Fixed
+- Slug field now again changes spaces to dashes automatically. Feature was accidentally removed when slug validation was added in [5.3.0].
+
 ## [6.0.0] - 2019-01-10
 
 ### Added
@@ -82,6 +87,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[6.0.1]: https://github.com/optimistdigital/nova-blog/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/optimistdigital/nova-blog/compare/5.6.0...6.0.0
 [5.6.0]: https://github.com/optimistdigital/nova-blog/compare/5.5.0...5.6.0
 [5.5.0]: https://github.com/optimistdigital/nova-blog/compare/5.4.0...5.5.0
