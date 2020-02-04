@@ -89,7 +89,7 @@ export default {
       if (!inputElement) return;
 
       inputElement.addEventListener('input', evt => this.updateTitle(titleContainer));
-      inputElement.addEventListener('change', evt => this.updateTitle(titleContainer));
+      inputElement.addEventListener('keyup', evt => this.updateTitle(titleContainer));
     },
   },
 };
