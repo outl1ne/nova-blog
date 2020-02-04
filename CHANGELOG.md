@@ -1,6 +1,14 @@
 # Changelog
 
-## [6.0.1] - 2020-02-01
+## [6.1.0] - 2020-02-04
+
+### Fixed
+- Fixed bug, where slug field didn't listen to deletion or cut/paste.
+
+### Added
+- Added `.editorconfig` to keep a common formatting rules between different branches and developers.
+
+## [6.0.1] - 2020-02-03
 
 ### Fixed
 - Slug field now again changes spaces to dashes automatically. Feature was accidentally removed when slug validation was added in [5.3.0].
@@ -8,7 +16,7 @@
 ## [6.0.0] - 2019-01-10
 
 ### Added
-- Added [nova-drafts](https://github.com/optimistdigital/nova-drafts) package to replace previous drafts logic.   
+- Added [nova-drafts](https://github.com/optimistdigital/nova-drafts) package to replace previous drafts logic.
  **All previous functionality will remain the same.**
 
 ### Removed
@@ -20,9 +28,9 @@
 ### Added
 - Users can now configure categories table name.
 - The default name for categories table will now be `nova-blog-categories`.
-- Added new migration to change categories table name to the one assigned in config file. 
+- Added new migration to change categories table name to the one assigned in config file.
 If you wish to keep your previous table name, please change the `nova-blog.php` config file
-before migrating. 
+before migrating.
 
 ### Changed
 - Changed `table` name inside config. `table -> blog_posts_table`
@@ -56,8 +64,8 @@ before migrating.
 ## [5.2.0] - 2019-11-13
 
 ### Changed
-- Migrations are now loaded automatically and can be deleted from your project. This aims to reduce the number of migration files inside the end project's folder and keep them more relevant.     
-     -Migration files to delete: 
+- Migrations are now loaded automatically and can be deleted from your project. This aims to reduce the number of migration files inside the end project's folder and keep them more relevant.
+     -Migration files to delete:
      ```
       2019_06_18_000000_create_blog_posts_table.php
       2019_08_07_000000_add_post_introduction_to_posts_table.php
@@ -73,9 +81,9 @@ before migrating.
 ## [5.0.0] - 2019-11-13
 
 ### Added
-- Added [Nova-Lang](https://github.com/optimistdigital/nova-lang) support. Now you can assign a locale to your blog-post and sort posts by locale. 
+- Added [Nova-Lang](https://github.com/optimistdigital/nova-lang) support. Now you can assign a locale to your blog-post and sort posts by locale.
 - drafting feature. Draft feature allows you to create previews of pages before publishing them.
-- links to front-end pages. Creates a new button next to your slug, that shows link to your front-end blog post. 
+- links to front-end pages. Creates a new button next to your slug, that shows link to your front-end blog post.
 
 
 ## [3.0.0] - 2019-08-29
@@ -87,6 +95,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[6.1.0]: https://github.com/optimistdigital/nova-blog/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/optimistdigital/nova-blog/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/optimistdigital/nova-blog/compare/5.6.0...6.0.0
 [5.6.0]: https://github.com/optimistdigital/nova-blog/compare/5.5.0...5.6.0
