@@ -2,13 +2,11 @@
 
 namespace OptimistDigital\NovaBlog;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Nova\Nova;
 use Illuminate\Support\ServiceProvider;
-use OptimistDigital\NovaBlog\Nova\Post;
+use Laravel\Nova\Nova;
 use OptimistDigital\NovaBlog\Nova\Category;
-use OptimistDigital\NovaBlog\Http\Middleware\Authorize;
+use OptimistDigital\NovaBlog\Nova\Post;
 
 class ToolServiceProvider extends ServiceProvider
 {

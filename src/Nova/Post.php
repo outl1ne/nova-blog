@@ -3,21 +3,21 @@
 namespace OptimistDigital\NovaBlog\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use OptimistDigital\NovaBlog\NovaBlog;
-use Whitecube\NovaFlexibleContent\Flexible;
-use Laravel\Nova\Fields\Markdown;
-use Laravel\Nova\Fields\DateTime;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 use OptimistDigital\NovaBlog\Nova\Fields\Title;
+use OptimistDigital\NovaBlog\NovaBlog;
+use Whitecube\NovaFlexibleContent\Flexible;
 
 class Post extends TemplateResource
 {

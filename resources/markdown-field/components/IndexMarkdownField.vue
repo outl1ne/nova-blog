@@ -3,13 +3,13 @@
 </template>
 
 <script>
-export default {
-  props: ['resourceName', 'field'],
+  export default {
+    props: ['resourceName', 'field'],
 
-  computed: {
-    renderedValue() {
-      return this.field.value;
+    computed: {
+      renderedValue() {
+        return this.field.value;
+      },
     },
-  },
-};
+  };
 </script>

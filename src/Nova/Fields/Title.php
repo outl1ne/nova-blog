@@ -1,4 +1,5 @@
 <?php
+
 namespace OptimistDigital\NovaBlog\Nova\Fields;
 
 use Laravel\Nova\Fields\Markdown;

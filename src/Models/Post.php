@@ -2,8 +2,6 @@
 
 namespace OptimistDigital\NovaBlog\Models;
 
-use Illuminate\Support\Str;
-use OptimistDigital\NovaBlog\NovaBlog;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model

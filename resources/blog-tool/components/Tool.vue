@@ -4,9 +4,9 @@
     <card class="bg-90 flex flex-col items-center justify-center" style="min-height: 300px">
       <svg
         class="spin fill-80 mb-6"
-        width="69"
         height="72"
         viewBox="0 0 23 24"
+        width="69"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -21,7 +21,7 @@
         You can edit this tool's component at:
         <code
           class="ml-1 border border-80 text-sm font-mono text-white bg-black rounded px-2 py-1"
-          >/nova-components/NovaBlog/resources/js/components/Tool.vue</code
+        >/nova-components/NovaBlog/resources/js/components/Tool.vue</code
         >
       </p>
     </card>
@@ -29,13 +29,13 @@
 </template>
 
 <script>
-export default {
-  mounted() {
-    //
-  },
-};
+  export default {
+    mounted() {
+      //
+    },
+  };
 </script>
 
 <style>
-/* Scoped Styles */
+  /* Scoped Styles */
 </style>
