@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.1.1] - 2020-02-04
+
+### Added
+- Slug field now automatically latinises itself.
+
 ## [6.1.0] - 2020-02-04
 
 ### Fixed
@@ -95,6 +100,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[6.1.1]: https://github.com/optimistdigital/nova-blog/compare/6.1.0...6.1.1
 [6.1.0]: https://github.com/optimistdigital/nova-blog/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/optimistdigital/nova-blog/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/optimistdigital/nova-blog/compare/5.6.0...6.0.0
