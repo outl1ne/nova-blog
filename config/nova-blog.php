@@ -51,5 +51,12 @@ return [
         // For example:
         // return env('FRONTEND_URL') . $post->slug;
         return null;
-    }
+    },
+
+
+    'hide_pinned_post_option' => false,
+
+    'hide_category_selector' => false,
+
+    'include_featured_image' => false,
 ];

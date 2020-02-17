@@ -37,7 +37,7 @@ class Post extends TemplateResource
         $fields = [
             ID::make()->sortable(),
             Title::make('Title', 'title')->rules('required')->alwaysShow(),
-            Boolean::make('Is pinned', 'is_pinned'),
+            config('nova-blog.hide_pinned_post_option') === true ? null : Boolean::make('Is pinned', 'is_pinned'),
             Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash')->onlyOnForms(),
             Text::make('Slug', function () {
                 $previewToken = $this->childDraft ? $this->childDraft->preview_token : $this->preview_token;
@@ -56,7 +56,8 @@ class Post extends TemplateResource
             })->asHtml()->exceptOnForms(),
             DateTime::make('Published at', 'published_at')->rules('required'),
             Textarea::make('Post introduction', 'post_introduction'),
-            BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
+            config('nova-blog.include_featured_image') === true ? Image::make('Featured image', 'featured_image') : null,
+            config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
             Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
                     Markdown::make('Text content', 'text_content'),
@@ -96,7 +97,9 @@ class Post extends TemplateResource
             $fields = array_merge($fields, $templateFieldsAndPanels['panels']);
         }
 
-        return $fields;
+        return collect($fields)->filter(function ($field) {
+            return $field !== null;
+        })->toArray();
     }
 
     protected function getSeoFields()
