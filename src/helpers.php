@@ -53,10 +53,11 @@ if (!function_exists('nova_get_post_by_slug')) {
             }
         }
 
+        $featuredImagePath = null;
+
         if ($post->featured_image) {
             $featuredImagePath = Storage::disk('public')->url($post->featured_image);
         }
-        $featuredImagePath = '';
 
         return [
             'id' => $post->id,
