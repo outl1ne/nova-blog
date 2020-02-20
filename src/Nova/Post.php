@@ -122,8 +122,10 @@ class Post extends TemplateResource
         $column = config('nova-blog.blog_posts_table', 'nova_blog_posts') . '.locale';
         $query->doesntHave('childDraft');
         if (NovaBlog::hasNovaLang())
-            $query->where($column, nova_lang_get_active_locale())
-                ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
+            $query->where(function ($subQuery) use ($column) {
+                $subQuery->where($column, nova_lang_get_active_locale())
+                    ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
+            });
         return $query;
     }
 }
