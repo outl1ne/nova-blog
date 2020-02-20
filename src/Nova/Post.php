@@ -63,7 +63,7 @@ class Post extends TemplateResource
                     Markdown::make('Text content', 'text_content'),
                 ])
                 ->addLayout('Image section', 'image', [
-                    Image::make('Image', 'image')->deletable(false),
+                    Image::make('Image', 'image')->deletable(false)->rules('required'),
                     Text::make('Image caption', 'caption'),
                     Text::make('Alt (image alternate text)', 'alt')
                 ])
