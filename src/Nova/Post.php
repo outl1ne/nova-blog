@@ -18,6 +18,7 @@ use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 use OptimistDigital\NovaBlog\Nova\Fields\Title;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
+use Laravel\Nova\Fields\Trix;
 
 class Post extends TemplateResource
 {
@@ -36,7 +37,7 @@ class Post extends TemplateResource
 
         $fields = [
             ID::make()->sortable(),
-            Title::make('Title', 'title')->rules('required')->alwaysShow(),
+            config('nova-blog.use_trix') === true ? Trix::make('Title', 'title')->rules('required')->alwaysShow() : Title::make('Title', 'title')->rules('required')->alwaysShow(),
             config('nova-blog.hide_pinned_post_option') === true ? null : Boolean::make('Is pinned', 'is_pinned'),
             Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash')->onlyOnForms(),
             Text::make('Slug', function () {
@@ -60,7 +61,7 @@ class Post extends TemplateResource
             config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
             Flexible::make('Post content', 'post_content')->hideFromIndex()
                 ->addLayout('Text section', 'text', [
-                    Markdown::make('Text content', 'text_content'),
+                    config('nova-blog.use_trix') === true ? Trix::make('Text content', 'text_content') : Markdown::make('Text content', 'text_content'),
                 ])
                 ->addLayout('Image section', 'image', [
                     Image::make('Image', 'image')->deletable(false)->rules('required'),

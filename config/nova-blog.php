@@ -59,4 +59,6 @@ return [
     'hide_category_selector' => false,
 
     'include_featured_image' => false,
+
+    'use_trix' => false,
 ];
