@@ -61,4 +61,6 @@ return [
     'include_featured_image' => false,
 
     'use_trix' => false,
+
+    'include_include_in_bloglist' => false,
 ];
