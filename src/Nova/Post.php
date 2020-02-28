@@ -39,6 +39,7 @@ class Post extends TemplateResource
             ID::make()->sortable(),
             config('nova-blog.use_trix') === true ? Trix::make('Title', 'title')->rules('required')->alwaysShow() : Title::make('Title', 'title')->rules('required')->alwaysShow(),
             config('nova-blog.hide_pinned_post_option') === true ? null : Boolean::make('Is pinned', 'is_pinned'),
+            config('nova-blog.include_include_in_bloglist') === true ? Boolean::make('Include in bloglist', 'include_in_bloglist') : null,
             Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash')->onlyOnForms(),
             Text::make('Slug', function () {
                 $previewToken = $this->childDraft ? $this->childDraft->preview_token : $this->preview_token;
