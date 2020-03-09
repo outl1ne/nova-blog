@@ -63,4 +63,6 @@ return [
     'use_trix' => false,
 
     'include_include_in_bloglist' => false,
+
+    'include_froala_texteditor_option' => false,
 ];
