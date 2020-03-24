@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    public $related_posts;
 
     protected $casts = [
         'published_at' => 'datetime',
@@ -29,10 +30,14 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function relatedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'nova_blog_related_posts', 'post_id', 'related_post_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
-
         static::saving(function ($post) {
             if ($post->is_pinned) {
                 Post::where('is_pinned', true)->each(function ($pinnedPost) {
@@ -42,8 +47,16 @@ class Post extends Model
             }
             return true;
         });
+        static::saved(function ($post) {
+            RelatedPost::where('post_id', $post->id)->delete();
+            collect(json_decode($post->related_posts))->each(function ($postId) use ($post) {
+                RelatedPost::create([
+                    'post_id' => $post->id,
+                    'related_post_id' => $postId
+                ]);
+            });
+        });
     }
-
     public function childDraft()
     {
         return $this->hasOne(Post::class, 'draft_parent_id', 'id');

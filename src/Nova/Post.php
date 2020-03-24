@@ -7,11 +7,13 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
@@ -20,6 +22,9 @@ use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Laravel\Nova\Fields\Trix;
 use Froala\NovaFroalaField\Froala;
+use OptimistDigital\NovaBlog\Models\Post as PostModel;
+use OptimistDigital\MultiselectField\Multiselect;
+use OptimistDigital\NovaBlog\Models\RelatedPost;
 
 class Post extends TemplateResource
 {
@@ -35,6 +40,15 @@ class Post extends TemplateResource
         $tableName = config('nova-blog.blog_posts_table', 'nova_blog_posts');
         $templateClass = $this->getTemplateClass();
         $templateFieldsAndPanels = $this->getTemplateFieldsAndPanels();
+
+        $relatedPostOptions = [];
+        \OptimistDigital\NovaBlog\Models\Post::all()->filter(function ($post) {
+            return $post->id !== $this->id;
+        })->each(function ($post) use (&$relatedPostOptions) {
+            $relatedPostOptions[$post->id] = $post->title;
+        });
+
+        $relatedPosts = RelatedPost::where('post_id', $this->id)->pluck('related_post_id');
 
         $postContent = Flexible::make('Post content', 'post_content')->hideFromIndex()
             ->addLayout('Text section', 'text', [
@@ -82,7 +96,17 @@ class Post extends TemplateResource
             config('nova-blog.include_featured_image') === true ? Image::make('Featured image', 'featured_image') : null,
             config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
 
+
             $postContent,
+            config('nova-blog.include_related_posts_feature') === true ?
+                Multiselect
+                ::make('Related posts', 'related_posts')
+                ->options($relatedPostOptions)
+                ->withMeta(['value' => $relatedPosts])
+                : null,
+
+
+
         ];
 
         if (NovaBlog::hasNovaLang()) {

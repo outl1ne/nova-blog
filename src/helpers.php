@@ -68,6 +68,7 @@ if (!function_exists('nova_get_post_by_slug')) {
             'published_at' => $post->published_at,
             'featured_image' => $featuredImagePath,
             'post_content' => nova_blog_map_content(json_decode($post->post_content)),
+            'related_posts' => $post->relatedPosts,
             'seo' => $seo,
         ];
     }

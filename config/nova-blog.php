@@ -65,4 +65,6 @@ return [
     'include_include_in_bloglist' => false,
 
     'include_froala_texteditor_option' => false,
+
+    'include_related_posts_feature' => false,
 ];
