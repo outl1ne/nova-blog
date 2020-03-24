@@ -1,5 +1,11 @@
 # Changelog
 
+## [8.0.0] - 2020-03-24
+
+### Added
+
+- BREAKING: Added related posts field. You should re-publish and run migrations to update the database.
+
 # [7.0.0] - 2020-02-18
 
 ### Added
