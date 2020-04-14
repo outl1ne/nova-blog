@@ -25,6 +25,8 @@ use Froala\NovaFroalaField\Froala;
 use OptimistDigital\NovaBlog\Models\Post as PostModel;
 use OptimistDigital\MultiselectField\Multiselect;
 use OptimistDigital\NovaBlog\Models\RelatedPost;
+use OptimistDigital\NovaLocaleField\LocaleField;
+use OptimistDigital\NovaLang\NovaLangField\NovaLangField;
 
 class Post extends TemplateResource
 {
@@ -34,8 +36,13 @@ class Post extends TemplateResource
 
     protected $type = 'post';
 
+
+
+
     public function fields(Request $request)
     {
+
+        $locales = $this->getLocales();
         // Get base data
         $tableName = config('nova-blog.blog_posts_table', 'nova_blog_posts');
         $templateClass = $this->getTemplateClass();
@@ -110,7 +117,9 @@ class Post extends TemplateResource
         ];
 
         if (NovaBlog::hasNovaLang()) {
-            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale');
+            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id');
+            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+                ->locales(nova_lang_get_all_locales())->exceptOnForms()->maxLocalesOnIndex(3);
         }
 
         if (NovaBlog::hasNovaDrafts()) {

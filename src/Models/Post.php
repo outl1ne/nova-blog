@@ -25,6 +25,14 @@ class Post extends Model
         $this->setTable(config('nova-blog.blog_posts_table', 'nova_blog_posts'));
     }
 
+    public function getLocales()
+    {
+        return [
+            'locales' => nova_lang_get_all_locales(),
+            'active' => $this->locale,
+        ];
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
