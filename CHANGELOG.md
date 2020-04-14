@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.0.0] - 2020-04-14
+
+### Added
+
+- BREAKING: Added locale parent id to posts table to support creating posts in different locales. You should re-publish and run migrations to update the database.
+
 ## [8.0.0] - 2020-03-24
 
 ### Added
