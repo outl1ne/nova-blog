@@ -1,15 +1,21 @@
-Nova.booting((Vue, router, store) => {
-  Vue.component('index-slug-field', require('./slug-field/components/IndexField'));
-  Vue.component('detail-slug-field', require('./slug-field/components/DetailField'));
-  Vue.component('form-slug-field', require('./slug-field/components/SlugField'));
+import IndexSlugField from './slug-field/components/IndexField.vue';
+import DetailSlugField from './slug-field/components/DetailField.vue';
+import FormSlugField from './slug-field/components/SlugField.vue';
+import IndexMarkdownField from './markdown-field/components/IndexMarkdownField.vue';
+import NovaBlogTool from './blog-tool/components/Tool.vue';
 
-  Vue.component('index-markdown-field', require('./markdown-field/components/IndexMarkdownField'));
+Nova.booting((Vue, router, store) => {
+  Vue.component('index-slug-field', IndexSlugField);
+  Vue.component('detail-slug-field', DetailSlugField);
+  Vue.component('form-slug-field', FormSlugField);
+
+  Vue.component('index-markdown-field', IndexMarkdownField);
 
   router.addRoutes([
     {
       name: 'nova-blog',
       path: '/nova-blog',
-      component: require('./blog-tool/components/Tool'),
+      component: NovaBlogTool,
     },
   ]);
 });
