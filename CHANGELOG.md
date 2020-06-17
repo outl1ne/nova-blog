@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1] - 2020-06-17
+
+### Changed
+
+- Updated packages
+- Bumped `nova-flexible-content` to version `0.2`
+
 ## [9.0.0] - 2020-04-14
 
 ### Added
