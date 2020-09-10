@@ -37,6 +37,40 @@ public function tools()
 }
 ```
 
+## Defining locales
+The config accepts a dictionary of locales.
+
+```php
+// in /config/nova-blog.php
+
+// ...
+'locales' => [
+  'en' => 'English',
+  'et' => 'Estonian',
+],
+
+// OR
+
+'locales' => function () {
+  return Locale::all()->pluck('name', 'key');
+},
+
+// if you wish to cache the configuration, pass a reference instead:
+
+'locales' => NovaBlogConfiguration::class . '::locales',
+
+// ...
+```
+
+### Nova Lang
+This package supports [optimistdigital/nova-lang](https://github.com/optimistdigital/nova-lang) for easier content localization.
+After installing and setting up `nova-lang` package, you can use `nova_lang_get_all_locales` helper function in `nova-blog` config file
+
+```php
+'locales' => nova_lang_get_all_locales(),
+```
+
+
 ### Toggling page draft feature
 
 Draft feature allows you to create previews of resources before publishing them. By default this feature is disabled but can be enabled by installing [nova-drafts](https://github.com/optimistdigital/nova-drafts) package.
