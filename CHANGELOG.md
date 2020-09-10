@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Fixed `nova-flexible-content` version
+- Fixed `nova_lang` error in Post model.
 
 ### Added
 
