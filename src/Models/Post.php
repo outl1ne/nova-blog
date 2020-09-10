@@ -3,6 +3,7 @@
 namespace OptimistDigital\NovaBlog\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OptimistDigital\NovaBlog\NovaBlog;
 
 class Post extends Model
 {
@@ -28,7 +29,7 @@ class Post extends Model
     public function getLocales()
     {
         return [
-            'locales' => nova_lang_get_all_locales(),
+            'locales' => NovaBlog::getLocales(),
             'active' => $this->locale,
         ];
     }

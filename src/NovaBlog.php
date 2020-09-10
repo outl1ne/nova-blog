@@ -51,4 +51,12 @@ class NovaBlog extends Tool
         $getPostUrl = config('nova-blog.page_url');
         return isset($getPostUrl) ? call_user_func($getPostUrl, $post) : null;
     }
+
+    public static function getLocales(): array
+    {
+        $localesConfig = config('nova-blog.locales', ['en' => 'English']);
+        if (is_callable($localesConfig)) return call_user_func($localesConfig);
+        if (is_array($localesConfig)) return $localesConfig;
+        return ['en' => 'English'];
+    }
 }

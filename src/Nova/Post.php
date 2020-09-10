@@ -2,31 +2,30 @@
 
 namespace OptimistDigital\NovaBlog\Nova;
 
+use Froala\NovaFroalaField\Froala;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Heading;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use OptimistDigital\MultiselectField\Multiselect;
+use OptimistDigital\NovaBlog\Models\RelatedPost;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 use OptimistDigital\NovaBlog\Nova\Fields\Title;
 use OptimistDigital\NovaBlog\NovaBlog;
-use Whitecube\NovaFlexibleContent\Flexible;
-use Laravel\Nova\Fields\Trix;
-use Froala\NovaFroalaField\Froala;
-use OptimistDigital\NovaBlog\Models\Post as PostModel;
-use OptimistDigital\MultiselectField\Multiselect;
-use OptimistDigital\NovaBlog\Models\RelatedPost;
-use OptimistDigital\NovaLocaleField\LocaleField;
 use OptimistDigital\NovaLang\NovaLangField\NovaLangField;
+use OptimistDigital\NovaLocaleField\LocaleField;
+use Whitecube\NovaFlexibleContent\Flexible;
 
 class Post extends TemplateResource
 {
@@ -36,17 +35,14 @@ class Post extends TemplateResource
 
     protected $type = 'post';
 
-
-
-
     public function fields(Request $request)
     {
-
-        $locales = $this->getLocales();
         // Get base data
         $tableName = config('nova-blog.blog_posts_table', 'nova_blog_posts');
         $templateClass = $this->getTemplateClass();
         $templateFieldsAndPanels = $this->getTemplateFieldsAndPanels();
+        $locales = NovaBlog::getLocales();
+        $hasManyDifferentLocales = Post::select('locale')->distinct()->get()->count() > 1;
 
         $relatedPostOptions = [];
         \OptimistDigital\NovaBlog\Models\Post::all()->filter(function ($post) {
@@ -107,19 +103,30 @@ class Post extends TemplateResource
             $postContent,
             config('nova-blog.include_related_posts_feature') === true ?
                 Multiselect
-                ::make('Related posts', 'related_posts')
-                ->options($relatedPostOptions)
-                ->withMeta(['value' => $relatedPosts])
+                    ::make('Related posts', 'related_posts')
+                    ->options($relatedPostOptions)
+                    ->withMeta(['value' => $relatedPosts])
                 : null,
-
 
 
         ];
 
         if (NovaBlog::hasNovaLang()) {
-            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id');
+            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
+        } else {
             $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
-                ->locales(nova_lang_get_all_locales())->exceptOnForms()->maxLocalesOnIndex(3);
+                ->locales($locales)
+                ->onlyOnForms();
+        }
+
+        if (count($locales) > 1) {
+            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+                ->locales($locales)
+                ->exceptOnForms()
+                ->maxLocalesOnIndex(3);
+
+        } else if ($hasManyDifferentLocales) {
+            $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
         }
 
         if (NovaBlog::hasNovaDrafts()) {

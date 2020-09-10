@@ -53,6 +53,19 @@ return [
         return null;
     },
 
+    /*
+    |--------------------------------------------------------------------------
+    | Locales
+    |--------------------------------------------------------------------------
+    |
+    | Set all the available locales as [key => name] pairs.
+    |
+    | For example ['en_US' => 'English'].
+    |
+    */
+
+    'locales' => ['en' => 'English'],
+
 
     'hide_pinned_post_option' => false,
 
