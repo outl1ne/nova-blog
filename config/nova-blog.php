@@ -66,7 +66,6 @@ return [
 
     'locales' => ['en' => 'English'],
 
-
     'hide_pinned_post_option' => false,
 
     'hide_category_selector' => false,

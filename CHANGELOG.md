@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.2.0] - 2020-06-19
+
+### Changed
+
+- Fixed `nova-flexible-content` version
+
+### Added
+
+- Added `locales` option to config.
+  If you are using package `optimistdigital/nova-lang`, you can define `'locales' => nova_lang_get_all_locales(),` in the config file.
+
 ## [9.1.1] - 2020-06-19
 
 ### Changed
