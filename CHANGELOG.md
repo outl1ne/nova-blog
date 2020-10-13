@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.2.1] - 2020-10-13
+
+### Changed
+
+- Fixed configuration files are being serializable error.
+
 ## [9.2.0] - 2020-06-19
 
 ### Changed
