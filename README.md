@@ -90,6 +90,11 @@ To display a link to the actual page next to the slug, add or overwrite the clos
 'page_url' => function (Post $post) {
   return env('FRONTEND_URL') . '/' . $post->slug;
 },
+
+// if you wish to cache the configuration, pass a reference instead:
+
+'page_url' => NovaBlogConfiguration::class . '::pageUrl',
+// ...
 ```
 
 ## Helper functions
