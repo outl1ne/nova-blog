@@ -41,17 +41,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | If a closure is specified, a link to the page is shown next to
-    | the page slug. The closure accepts a Page model as a paramater.
+    | the page slug. The closure accepts a Page model as a parameter.
     |
     | Set to `null` if the link should not be displayed.
     |
     */
 
-    'page_url' => function (\OptimistDigital\NovaBlog\Models\Post $post) {
-        // For example:
-        // return env('FRONTEND_URL') . $post->slug;
-        return null;
-    },
+    'page_url' => null,
 
     /*
     |--------------------------------------------------------------------------
