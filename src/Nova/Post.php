@@ -23,9 +23,13 @@ use OptimistDigital\NovaBlog\Models\RelatedPost;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 use OptimistDigital\NovaBlog\Nova\Fields\Title;
 use OptimistDigital\NovaBlog\NovaBlog;
-use OptimistDigital\NovaLang\NovaLangField\NovaLangField;
 use OptimistDigital\NovaLocaleField\LocaleField;
 use Whitecube\NovaFlexibleContent\Flexible;
+use Laravel\Nova\Fields\Trix;
+use Froala\NovaFroalaField\Froala;
+use OptimistDigital\MultiselectField\Multiselect;
+use OptimistDigital\NovaBlog\Models\RelatedPost;
+use OptimistDigital\NovaLocaleField\LocaleField;
 
 class Post extends TemplateResource
 {
@@ -103,16 +107,16 @@ class Post extends TemplateResource
             $postContent,
             config('nova-blog.include_related_posts_feature') === true ?
                 Multiselect
-                    ::make('Related posts', 'related_posts')
-                    ->options($relatedPostOptions)
-                    ->withMeta(['value' => $relatedPosts])
+                ::make('Related posts', 'related_posts')
+                ->options($relatedPostOptions)
+                ->withMeta(['value' => $relatedPosts])
                 : null,
 
 
         ];
 
         if (NovaBlog::hasNovaLang()) {
-            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
+            $fields[] = \OptimistDigital\NovaLang\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
         } else {
             $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
                 ->locales($locales)
@@ -124,7 +128,6 @@ class Post extends TemplateResource
                 ->locales($locales)
                 ->exceptOnForms()
                 ->maxLocalesOnIndex(3);
-
         } else if ($hasManyDifferentLocales) {
             $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
         }

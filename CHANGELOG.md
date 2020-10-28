@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.2.2] - 2020-10-28
+
+### Changed
+
+- Fixed `NovaLangField` reference
+
 ## [9.2.1] - 2020-10-13
 
 ### Changed
