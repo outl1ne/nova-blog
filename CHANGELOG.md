@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.2.3] - 2020-10-28
+
+### Changed
+
+- Fixed duplicate imports
+
 ## [9.2.2] - 2020-10-28
 
 ### Changed
