@@ -1,5 +1,12 @@
 # Changelog
 
+# [7.4.1] - 2020-10-30
+
+### Changed
+
+- - Fixed `NovaLangField` reference
+
+
 # [7.0.0] - 2020-02-18
 
 ### Added
