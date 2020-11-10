@@ -38,6 +38,7 @@ public function tools()
 ```
 
 ## Defining locales
+
 The config accepts a dictionary of locales.
 
 ```php
@@ -63,13 +64,13 @@ The config accepts a dictionary of locales.
 ```
 
 ### Nova Lang
+
 This package supports [optimistdigital/nova-lang](https://github.com/optimistdigital/nova-lang) for easier content localization.
 After installing and setting up `nova-lang` package, you can use `nova_lang_get_all_locales` helper function in `nova-blog` config file
 
 ```php
 'locales' => nova_lang_get_all_locales(),
 ```
-
 
 ### Toggling page draft feature
 
@@ -230,7 +231,7 @@ Example response for querying page with slug `test-post-3` (`nova_get_post_by_sl
 
 ## Credits
 
-- [Marika Must](https://github.com/marycaz)
+- [Marika Must](https://github.com/MarikaMustV)
 - [Tarvo Reinpalu](https://github.com/Tarpsvo)
 
 ## License

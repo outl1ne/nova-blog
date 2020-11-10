@@ -128,6 +128,7 @@ class Post extends TemplateResource
         if (NovaBlog::hasNovaDrafts()) {
             $fields[] = \OptimistDigital\NovaDrafts\DraftButton::make('Draft');
             $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make('State', 'published');
+            $fields[] = \OptimistDigital\NovaDrafts\UnpublishButton::make('Unpublish');
         }
 
         $fields[] = new Panel('SEO', $this->getSeoFields());
