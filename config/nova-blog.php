@@ -75,4 +75,12 @@ return [
     'include_froala_texteditor_option' => false,
 
     'include_related_posts_feature' => false,
+
+    'hide_category_column_from_index' => false,
+
+    'hide_related_posts_column_from_index' => false,
+
+    'hide_locale_column_from_index' => false,
+
+
 ];

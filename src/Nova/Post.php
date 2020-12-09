@@ -49,6 +49,8 @@ class Post extends TemplateResource
         });
 
         $relatedPosts = RelatedPost::where('post_id', $this->id)->pluck('related_post_id');
+        $showCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable();
+        $hideCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable()->hideFromIndex();
 
         $postContent = Flexible::make('Post content', 'post_content')->hideFromIndex()
             ->addLayout('Text section', 'text', [
@@ -94,35 +96,49 @@ class Post extends TemplateResource
             DateTime::make('Published at', 'published_at')->rules('required'),
             Textarea::make('Post introduction', 'post_introduction'),
             config('nova-blog.include_featured_image') === true ? Image::make('Featured image', 'featured_image') : null,
-            config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable(),
-
+            (config('nova-blog.hide_category_column_from_index') === true) ? $hideCategoryColumnInIndex : $showCategoryColumnInIndex,
 
             $postContent,
-            config('nova-blog.include_related_posts_feature') === true ?
+            config('nova-blog.include_related_posts_feature') === true && config('nova-blog.hide_related_posts_column_from_index') === false ?
                 Multiselect
                 ::make('Related posts', 'related_posts')
                 ->options($relatedPostOptions)
                 ->withMeta(['value' => $relatedPosts])
                 : null,
 
-
+            config('nova-blog.include_related_posts_feature') === true && config('nova-blog.hide_related_posts_column_from_index') === true ?
+                Multiselect
+                ::make('Related posts', 'related_posts')
+                ->options($relatedPostOptions)
+                ->withMeta(['value' => $relatedPosts])
+                ->hideFromIndex()
+                : null,
         ];
 
         if (NovaBlog::hasNovaLang()) {
-            $fields[] = \OptimistDigital\NovaLang\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
+            config('nova-blog.hide_locale_column_from_index') === true ?  $fields[] = \OptimistDigital\NovaLang\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms()->hideFromIndex() :
+                $fields[] = \OptimistDigital\NovaLang\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
         } else {
-            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+            config('nova-blog.hide_locale_column_from_index') === true ?    $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+                ->locales($locales)
+                ->onlyOnForms()->hideFromIndex() :
+                $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
                 ->locales($locales)
                 ->onlyOnForms();
         }
 
         if (count($locales) > 1) {
-            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+            config('nova-blog.hide_locale_column_from_index') === true ? $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+                ->locales($locales)
+                ->exceptOnForms()
+                ->hideFromIndex() :
+                $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
                 ->locales($locales)
                 ->exceptOnForms()
                 ->maxLocalesOnIndex(3);
         } else if ($hasManyDifferentLocales) {
-            $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
+            config('nova-blog.hide_locale_column_from_index') === true ? $fields[] = Text::make('Locale', 'locale')->exceptOnForms()->hideFromIndex() :
+                $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
         }
 
         if (NovaBlog::hasNovaDrafts()) {
