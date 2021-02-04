@@ -29,9 +29,10 @@
   "require": {
     "php": ">=7.1.0",
     "doctrine/dbal": "^2.9",
+    "laravel/nova": "^3.0",
     "optimistdigital/nova-locale-field": "^2.0",
     "whitecube/nova-flexible-content": "^0.2.4",
-    "optimistdigital/nova-multiselect-field": "^1.8.1"
+    "optimistdigital/nova-multiselect-field": "^2.0.6"
   },
   "autoload": {
     "psr-4": {
@@ -52,5 +53,11 @@
     "sort-packages": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ]
 }
