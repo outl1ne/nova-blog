@@ -57,7 +57,7 @@ class Post extends TemplateResource
                 config('nova-blog.use_trix') === true ? Trix::make('Text content', 'text_content') : Markdown::make('Text content', 'text_content'),
             ])
             ->addLayout('Image section', 'image', [
-                Image::make('Image', 'image')->deletable(false)->creationRules('required'),
+                Image::make('Image', 'image')->deletable(false)->rules('required'),
                 Text::make('Image caption', 'caption'),
                 Text::make('Alt (image alternate text)', 'alt')
             ])
