@@ -31,7 +31,7 @@
     "doctrine/dbal": "^2.9",
     "optimistdigital/nova-locale-field": "^2.0",
     "whitecube/nova-flexible-content": "^0.2.4",
-    "optimistdigital/nova-multiselect-field": "^1.8.1"
+    "optimistdigital/nova-multiselect-field": ">=1.8.1"
   },
   "autoload": {
     "psr-4": {
