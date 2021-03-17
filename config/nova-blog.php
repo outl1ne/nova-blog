@@ -82,5 +82,6 @@ return [
 
     'hide_locale_column_from_index' => false,
 
+    'navigation_title' => 'Blog',
 
 ];
