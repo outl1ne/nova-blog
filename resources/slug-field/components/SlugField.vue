@@ -853,8 +853,8 @@ export default {
       ₓ: 'x',
     };
 
-    String.prototype.latinise = function() {
-      return this.replace(/[^A-Za-z0-9\[\] ]/g, function(a) {
+    String.prototype.latinise = function () {
+      return this.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
         return Latinise.latin_map[a] || a;
       });
     };
@@ -917,19 +917,21 @@ export default {
 
     autoFillFromTitle() {
       // Find the correct field based on the label
-      const titleContainer = document.querySelector('label[for="title"]').parentElement.parentElement;
+      if (document.querySelector('label[for="title"]')) {
+        const titleContainer = document.querySelector('label[for="title"]').parentElement.parentElement;
 
-      // We support titles which are markdown textareas, or titles, so we look for both
-      // Codemirror creates two textareas, so we look for the one with tabindex which is the one that receives user input
-      const inputElement =
-        titleContainer.querySelector('textarea[tabindex="0"]') ||
-        titleContainer.querySelector('#title') ||
-        titleContainer.querySelector('.trix-content');
+        // We support titles which are markdown textareas, or titles, so we look for both
+        // Codemirror creates two textareas, so we look for the one with tabindex which is the one that receives user input
+        const inputElement =
+          titleContainer.querySelector('textarea[tabindex="0"]') ||
+          titleContainer.querySelector('#title') ||
+          titleContainer.querySelector('.trix-content');
 
-      if (!inputElement) return;
+        if (!inputElement) return;
 
-      inputElement.addEventListener('input', evt => this.updateTitle(titleContainer));
-      inputElement.addEventListener('keyup', evt => this.updateTitle(titleContainer));
+        inputElement.addEventListener('input', (evt) => this.updateTitle(titleContainer));
+        inputElement.addEventListener('keyup', (evt) => this.updateTitle(titleContainer));
+      }
     },
   },
 };
