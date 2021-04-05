@@ -47,6 +47,12 @@ class Post extends Model
     protected static function boot()
     {
         parent::boot();
+        static::updating(function ($post) {
+            if ($post->slug_generation === 'new_from_title') {
+                $post->slug = str_replace(' ', '-', $post->title);
+            }
+            unset($post->slug_generation);
+        });
         static::saving(function ($post) {
             if ($post->is_pinned) {
                 Post::where('is_pinned', true)->each(function ($pinnedPost) {
@@ -66,6 +72,7 @@ class Post extends Model
             });
         });
     }
+
     public function childDraft()
     {
         return $this->hasOne(Post::class, 'draft_parent_id', 'id');

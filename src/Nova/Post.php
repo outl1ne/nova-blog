@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Select;
 use Froala\NovaFroalaField\Froala;
 use OptimistDigital\NovaBlog\NovaBlog;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -23,9 +24,12 @@ use OptimistDigital\NovaBlog\Nova\Fields\Title;
 use OptimistDigital\NovaLocaleField\LocaleField;
 use OptimistDigital\NovaBlog\Models\RelatedPost;
 use OptimistDigital\MultiselectField\Multiselect;
+use DigitalCreative\ConditionalContainer\ConditionalContainer;
+use DigitalCreative\ConditionalContainer\HasConditionalContainer;
 
 class Post extends TemplateResource
 {
+    use HasConditionalContainer;
     public static $title = 'name';
     public static $model = 'OptimistDigital\NovaBlog\Models\Post';
     public static $displayInNavigation = false;
@@ -77,7 +81,13 @@ class Post extends TemplateResource
             config('nova-blog.use_trix') === true ? Trix::make('Title', 'title')->rules('required')->alwaysShow() : Title::make('Title', 'title')->rules('required')->alwaysShow(),
             config('nova-blog.hide_pinned_post_option') === true ? null : Boolean::make('Is pinned', 'is_pinned'),
             config('nova-blog.include_include_in_bloglist') === true ? Boolean::make('Include in bloglist', 'include_in_bloglist') : null,
-            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash')->onlyOnForms(),
+            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash')->hideWhenUpdating()->hideFromIndex()->hideFromDetail(),
+            Select::make('Slug', 'slug_generation')->options(['original' => 'Use existing', 'new_from_title' => 'Generate new from title', 'custom' => 'Create custom'])->hideWhenCreating()->hideFromDetail()->hideFromIndex()->rules('required')->resolveUsing(function () {
+                return $this->slug_generation ?? 'original';
+            }),
+            ConditionalContainer::make([
+                Slug::make('Custom slug', 'slug')->rules('required'),
+            ])->if('slug_generation = custom'),
             Text::make('Slug', function () {
                 $previewToken = $this->childDraft ? $this->childDraft->preview_token : $this->preview_token;
                 $previewPart = $previewToken ? '?preview=' . $previewToken : '';
