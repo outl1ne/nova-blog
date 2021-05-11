@@ -5,9 +5,9 @@ import IndexMarkdownField from './markdown-field/components/IndexMarkdownField.v
 import NovaBlogTool from './blog-tool/components/Tool.vue';
 
 Nova.booting((Vue, router, store) => {
-  Vue.component('index-slug-field', IndexSlugField);
-  Vue.component('detail-slug-field', DetailSlugField);
-  Vue.component('form-slug-field', FormSlugField);
+  Vue.component('index-nova-blog-slug-field', IndexSlugField);
+  Vue.component('detail-nova-blog-slug-field', DetailSlugField);
+  Vue.component('form-nova-blog-slug-field', FormSlugField);
 
   Vue.component('index-markdown-field', IndexMarkdownField);
 

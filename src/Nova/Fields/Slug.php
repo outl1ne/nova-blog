@@ -6,5 +6,5 @@ use Laravel\Nova\Fields\Text;
 
 class Slug extends Text
 {
-    public $component = 'slug-field';
+    public $component = 'nova-blog-slug-field';
 }
