@@ -229,6 +229,16 @@ Example response for querying page with slug `test-post-3` (`nova_get_post_by_sl
 }
 ```
 
+## Localization
+
+The translation file(s) can be published by using the following command:
+
+```bash
+php artisan vendor:publish --provider="OptimistDigital\NovaBlog\ToolServiceProvider" --tag="translations"
+```
+
+You can add your translations to `resources/lang/vendor/nova-blog/` by creating a new translations file with the locale name (ie `et.json`) and copying the JSON from the existing `en.json`.
+
 ## Credits
 
 - [Marika Must](https://github.com/MarikaMustV)

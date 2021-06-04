@@ -15,6 +15,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Related posts table name
+    |--------------------------------------------------------------------------
+    |
+    | Set a custom table for Nova Blog to store its posts data.
+    |
+    */
+
+    'blog_related_posts_table' => 'nova_blog_related_posts',
+
+    /*
+    |--------------------------------------------------------------------------
     | Categories table name
     |--------------------------------------------------------------------------
     |
@@ -80,8 +91,6 @@ return [
 
     'hide_related_posts_column_from_index' => false,
 
-    'hide_locale_column_from_index' => false,
-
-    'navigation_title' => 'Blog',
+    'hide_locale_column_from_index' => false
 
 ];

@@ -44,8 +44,8 @@ class Category extends TemplateResource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title', 'title'),
-            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash'),
+            Text::make(__('novaBlog.title'), 'title'),
+            Slug::make(__('novaBlog.slug'), 'slug')->rules('required', 'alpha_dash_or_slash'),
         ];
     }
 
@@ -91,5 +91,15 @@ class Category extends TemplateResource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function label()
+    {
+        return __('novaBlog.categories');
+    }
+
+    public static function singularLabel()
+    {
+        return __('novaBlog.category');
     }
 }

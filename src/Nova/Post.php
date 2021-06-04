@@ -9,7 +9,6 @@ use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
@@ -53,42 +52,49 @@ class Post extends TemplateResource
         });
 
         $relatedPosts = RelatedPost::where('post_id', $this->id)->pluck('related_post_id');
-        $showCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable();
-        $hideCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make('Category', 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable()->hideFromIndex();
+        $showCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make(__('novaBlog.category'), 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable();
+        $hideCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make(__('novaBlog.category'), 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable()->hideFromIndex();
 
-        $postContent = Flexible::make('Post content', 'post_content')->hideFromIndex()
-            ->addLayout('Text section', 'text', [
-                config('nova-blog.use_trix') === true ? Trix::make('Text content', 'text_content') : Markdown::make('Text content', 'text_content'),
+        $postContent = Flexible::make(__('novaBlog.postContent'), 'post_content')->hideFromIndex()
+            ->addLayout(__('novaBlog.textSection'), 'text', [
+                config('nova-blog.use_trix') === true ? Trix::make(__('novaBlog.textContent'), 'text_content') : Markdown::make(__('novaBlog.textContent'), 'text_content'),
             ])
-            ->addLayout('Image section', 'image', [
-                Image::make('Image', 'image')->deletable(false)->creationRules('required'),
-                Text::make('Image caption', 'caption'),
-                Text::make('Alt (image alternate text)', 'alt')
+            ->addLayout(__('novaBlog.imageSection'), 'image', [
+                Image::make(__('novaBlog.image'), 'image')->deletable(false)->creationRules('required'),
+                Text::make(__('novaBlog.imageCaption'), 'caption'),
+                Text::make(__('novaBlog.imageAlt'), 'alt')
             ])
-            ->addLayout('Other embed media section', 'other_media', [
-                Textarea::make('Embed media code (twitter, iframe, etc.)', 'media_code'),
-                Text::make('Media caption', 'caption')
-            ]);
+            ->addLayout(__('novaBlog.embedMediaSection'), 'other_media', [
+                Textarea::make(__('novaBlog.embedMediaCode'), 'media_code'),
+                Text::make(__('novaBlog.embedMediaCaption'), 'caption')
+            ])->button(__('novaBlog.addLayoutButton'));
 
         if (config('nova-blog.include_froala_texteditor_option')) {
-            $postContent->addLayout('Text section in Froala', 'text_froala', [
-                Froala::make('Text section in Froala', 'text_content_froala'),
+            $postContent->addLayout(__('novaBlog.textSectionFroala'), 'text_froala', [
+                Froala::make(__('novaBlog.textSectionFroala'), 'text_content_froala'),
             ]);
         }
 
         $fields = [
             ID::make()->sortable(),
-            config('nova-blog.use_trix') === true ? Trix::make('Title', 'title')->rules('required')->alwaysShow() : Title::make('Title', 'title')->rules('required')->alwaysShow(),
-            config('nova-blog.hide_pinned_post_option') === true ? null : Boolean::make('Is pinned', 'is_pinned'),
-            config('nova-blog.include_include_in_bloglist') === true ? Boolean::make('Include in bloglist', 'include_in_bloglist') : null,
-            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash')->hideWhenUpdating()->hideFromIndex()->hideFromDetail(),
-            Select::make('Slug', 'slug_generation')->options(['original' => 'Use existing', 'new_from_title' => 'Generate new from title', 'custom' => 'Create custom'])->hideWhenCreating()->hideFromDetail()->hideFromIndex()->rules('required')->resolveUsing(function () {
+            config('nova-blog.use_trix') === true ? Trix::make(__('novaBlog.title'), 'title')->rules('required')->alwaysShow() : Title::make(__('novaBlog.title'), 'title')->rules('required')->alwaysShow(),
+            config('nova-blog.hide_pinned_post_option') === true ? null : Boolean::make(__('novaBlog.isPinned'), 'is_pinned'),
+            config('nova-blog.include_include_in_bloglist') === true ? Boolean::make(__('novaBlog.includeInBloglist'), 'include_in_bloglist') : null,
+            Slug::make(__('novaBlog.slug'), 'slug')->rules('required', 'alpha_dash_or_slash')->hideWhenUpdating()->hideFromIndex()->hideFromDetail(),
+            Select::make(__('novaBlog.slug'), 'slug_generation')
+                ->options(
+                    [
+                        'original' => __('novaBlog.slugOriginal'),
+                        'new_from_title' => __('novaBlog.slugNewFromTitle'),
+                        'custom' => __('novaBlog.slugCreateCustom')
+                    ]
+                )->hideWhenCreating()->hideFromDetail()->hideFromIndex()->rules('required')->resolveUsing(function () {
                 return $this->slug_generation ?? 'original';
             }),
             ConditionalContainer::make([
-                Slug::make('Custom slug', 'slug')->rules('required'),
+                Slug::make(__('novaBlog.customSlug'), 'slug')->rules('required'),
             ])->if('slug_generation = custom'),
-            Text::make('Slug', function () {
+            Text::make(__('novaBlog.slug'), function () {
                 $previewToken = $this->childDraft ? $this->childDraft->preview_token : $this->preview_token;
                 $previewPart = $previewToken ? '?preview=' . $previewToken : '';
                 $pagePath = $this->resource->slug;
@@ -103,22 +109,22 @@ class Post extends TemplateResource
                             <a target='_blank' href='$pageUrl' class='text-sm py-1 px-2 text-primary no-underline dim font-bold'>$buttonText</a>
                         </div>";
             })->asHtml()->exceptOnForms(),
-            DateTime::make('Published at', 'published_at')->rules('required'),
-            Textarea::make('Post introduction', 'post_introduction'),
-            config('nova-blog.include_featured_image') === true ? Image::make('Featured image', 'featured_image') : null,
+            DateTime::make(__('novaBlog.publishedAt'), 'published_at')->rules('required'),
+            Textarea::make(__('novaBlog.postIntroduction'), 'post_introduction'),
+            config('nova-blog.include_featured_image') === true ? Image::make(__('novaBlog.featuredImage'), 'featured_image') : null,
             (config('nova-blog.hide_category_column_from_index') === true) ? $hideCategoryColumnInIndex : $showCategoryColumnInIndex,
 
             $postContent,
             config('nova-blog.include_related_posts_feature') === true && config('nova-blog.hide_related_posts_column_from_index') === false ?
                 Multiselect
-                ::make('Related posts', 'related_posts')
+                ::make(__('novaBlog.relatedPosts'), 'related_posts')
                 ->options($relatedPostOptions)
                 ->withMeta(['value' => $relatedPosts])
                 : null,
 
             config('nova-blog.include_related_posts_feature') === true && config('nova-blog.hide_related_posts_column_from_index') === true ?
                 Multiselect
-                ::make('Related posts', 'related_posts')
+                ::make(__('novaBlog.relatedPosts'), 'related_posts')
                 ->options($relatedPostOptions)
                 ->withMeta(['value' => $relatedPosts])
                 ->hideFromIndex()
@@ -126,44 +132,44 @@ class Post extends TemplateResource
         ];
 
         if (NovaBlog::hasNovaLang()) {
-            config('nova-blog.hide_locale_column_from_index') === true ?  $fields[] = \OptimistDigital\NovaLang\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms()->hideFromIndex() :
-                $fields[] = \OptimistDigital\NovaLang\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
+            config('nova-blog.hide_locale_column_from_index') === true ?  $fields[] = \OptimistDigital\NovaLang\NovaLangField::make(__('novaBlog.locale'), 'locale', 'locale_parent_id')->onlyOnForms()->hideFromIndex() :
+                $fields[] = \OptimistDigital\NovaLang\NovaLangField::make(__('novaBlog.locale'), 'locale', 'locale_parent_id')->onlyOnForms();
         } else {
-            config('nova-blog.hide_locale_column_from_index') === true ?    $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+            config('nova-blog.hide_locale_column_from_index') === true ?    $fields[] = LocaleField::make(__('novaBlog.locale'), 'locale', 'locale_parent_id')
                 ->locales($locales)
                 ->onlyOnForms()->hideFromIndex() :
-                $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+                $fields[] = LocaleField::make(__('novaBlog.locale'), 'locale', 'locale_parent_id')
                 ->locales($locales)
                 ->onlyOnForms();
         }
 
         if (count($locales) > 1) {
-            config('nova-blog.hide_locale_column_from_index') === true ? $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+            config('nova-blog.hide_locale_column_from_index') === true ? $fields[] = LocaleField::make(__('novaBlog.locale'), 'locale', 'locale_parent_id')
                 ->locales($locales)
                 ->exceptOnForms()
                 ->hideFromIndex() :
-                $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+                $fields[] = LocaleField::make(__('novaBlog.locale'), 'locale', 'locale_parent_id')
                 ->locales($locales)
                 ->exceptOnForms()
                 ->maxLocalesOnIndex(3);
         } else if ($hasManyDifferentLocales) {
-            config('nova-blog.hide_locale_column_from_index') === true ? $fields[] = Text::make('Locale', 'locale')->exceptOnForms()->hideFromIndex() :
-                $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
+            config('nova-blog.hide_locale_column_from_index') === true ? $fields[] = Text::make(__('novaBlog.locale'), 'locale')->exceptOnForms()->hideFromIndex() :
+                $fields[] = Text::make(__('novaBlog.locale'), 'locale')->exceptOnForms();
         }
 
         if (NovaBlog::hasNovaDrafts()) {
-            $fields[] = \OptimistDigital\NovaDrafts\DraftButton::make('Draft');
-            $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make('State', 'published');
-            $fields[] = \OptimistDigital\NovaDrafts\UnpublishButton::make('Unpublish');
+            $fields[] = \OptimistDigital\NovaDrafts\DraftButton::make(__('novaBlog.draft'),'draft');
+            $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make(__('novaBlog.status'), 'published');
+            $fields[] = \OptimistDigital\NovaDrafts\UnpublishButton::make(__('novaBlog.unpublish'),'Unpublish');
         }
 
-        $fields[] = new Panel('SEO', $this->getSeoFields());
+        $fields[] = new Panel(__('novaBlog.seo'), $this->getSeoFields());
 
         if (count($templateFieldsAndPanels['fields']) > 0) {
             $fields[] = new Panel(
-                'Page data',
+                __('novaBlog.pageData'),
                 array_merge(
-                    [Heading::make('Page data')->hideFromDetail()],
+                    [Heading::make(__('novaBlog.pageData'))->hideFromDetail()],
                     $templateFieldsAndPanels['fields']
                 )
             );
@@ -180,10 +186,9 @@ class Post extends TemplateResource
     protected function getSeoFields()
     {
         return [
-            Heading::make('SEO'),
-            Text::make('SEO Title', 'seo_title')->hideFromIndex(),
-            Text::make('SEO Description', 'seo_description')->hideFromIndex(),
-            Image::make('SEO Image', 'seo_image')->hideFromIndex(),
+            Text::make(__('novaBlog.seoTitle'), 'seo_title')->hideFromIndex(),
+            Text::make(__('novaBlog.seoDescription'), 'seo_description')->hideFromIndex(),
+            Image::make(__('novaBlog.seoImage'), 'seo_image')->hideFromIndex(),
         ];
     }
 
@@ -202,5 +207,15 @@ class Post extends TemplateResource
                     ->orWhereNotIn($column, array_keys(nova_lang_get_all_locales()));
             });
         return $query;
+    }
+
+    public static function label()
+    {
+        return __('novaBlog.posts');
+    }
+
+    public static function singularLabel()
+    {
+        return __('novaBlog.post');
     }
 }

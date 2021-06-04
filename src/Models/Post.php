@@ -41,7 +41,7 @@ class Post extends Model
 
     public function relatedPosts()
     {
-        return $this->belongsToMany(Post::class, 'nova_blog_related_posts', 'post_id', 'related_post_id');
+        return $this->belongsToMany(Post::class, config('nova-blog.blog_related_posts_table', 'nova_blog_related_posts'), 'post_id', 'related_post_id');
     }
 
     protected static function boot()

@@ -14,8 +14,9 @@ class CreateRelatedPostsTable extends Migration
     public function up()
     {
         $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
+        $relatedPostsTable = config('nova-blog.blog_related_posts_table', 'nova_blog_related_posts');
 
-        Schema::create('nova_blog_related_posts', function (Blueprint $table) use ($postsTable) {
+        Schema::create($relatedPostsTable, function (Blueprint $table) use ($postsTable) {
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('post_id')->unsigned()->nullable();
@@ -32,6 +33,7 @@ class CreateRelatedPostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('related_posts');
+        $relatedPostsTable = config('nova-blog.blog_related_posts_table', 'nova_blog_related_posts');
+        Schema::dropIfExists($relatedPostsTable);
     }
 }
