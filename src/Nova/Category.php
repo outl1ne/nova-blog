@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
+use OptimistDigital\NovaSortable\Traits\HasSortableRows;
 
 class Category extends TemplateResource
 {
+    use HasSortableRows;
 
     public static $displayInNavigation = false;
     /**
