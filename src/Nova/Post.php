@@ -72,7 +72,7 @@ class Post extends TemplateResource
 
         if (config('nova-blog.include_froala_texteditor_option')) {
             $postContent->addLayout('Text section in Froala', 'text_froala', [
-                Froala::make('Text section in Froala', 'text_content_froala'),
+                Froala::make('Text section in Froala', 'text_content_froala')
             ]);
         }
 
