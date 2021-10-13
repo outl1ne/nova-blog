@@ -19,7 +19,7 @@
             }"
             class="text-white ml-8 no-underline dim"
         >
-            Posts
+            {{ __('Posts') }}
         </router-link>
     </li>
     <li class="leading-wide mb-4 text-sm">
@@ -32,7 +32,7 @@
             }"
             class="text-white ml-8 no-underline dim"
         >
-            Categories
+            {{ __('Categories') }}
         </router-link>
     </li>
 </ul>
