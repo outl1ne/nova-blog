@@ -37,6 +37,16 @@ class Category extends TemplateResource
     ];
 
     /**
+     * Label for resources
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return __('Categories');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param \Illuminate\Http\Request $request
@@ -46,8 +56,8 @@ class Category extends TemplateResource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title', 'title'),
-            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash'),
+            Text::make(__('Title'), 'title'),
+            Slug::make(__('Slug'), 'slug')->rules('required', 'alpha_dash_or_slash'),
         ];
     }
 
