@@ -19,7 +19,7 @@ class AddLocaleParentIdColumnToPosts extends Migration
         Schema::table($postsTable, function (Blueprint $table) {
 
             $table->unsignedBigInteger('locale_parent_id')->nullable();
-            $table->foreign('locale_parent_id')->references('id')->on($table);
+            $table->foreign('locale_parent_id')->references('id')->on($postsTable);
         });
     }
 
