@@ -16,7 +16,7 @@ class AddLocaleParentIdColumnToPosts extends Migration
     {
         $postsTable = config('nova-blog.blog_posts_table', 'nova_blog_posts');
 
-        Schema::table($postsTable, function (Blueprint $table) {
+        Schema::table($postsTable, function (Blueprint $table) use ($postsTable) {
 
             $table->unsignedBigInteger('locale_parent_id')->nullable();
             $table->foreign('locale_parent_id')->references('id')->on($postsTable);
