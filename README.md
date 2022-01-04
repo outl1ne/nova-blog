@@ -85,7 +85,7 @@ composer require optimistdigital/nova-drafts
 To display a link to the actual page next to the slug, add or overwrite the closure in `config/nova-blog.php` for the key `page_url`.
 
 ```php
-// in /config/nova-page-manager.php
+// in /config/nova-blog.php
 
 // ...
 'page_url' => function (Post $post) {
