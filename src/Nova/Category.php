@@ -41,8 +41,8 @@ class Category extends TemplateResource
     {
         return [
             ID::make()->sortable(),
-            Text::make(__('novaBlog.title'), 'title'),
-            Slug::make(__('novaBlog.slug'), 'slug')->rules('required', 'alpha_dash_or_slash'),
+            Text::make(__('novaBlog.title'), 'title')->translatable(),
+            Slug::make(__('novaBlog.slug'), 'slug')->rules('required', 'alpha_dash_or_slash')->translatable(),
         ];
     }
 
