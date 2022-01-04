@@ -73,6 +73,40 @@ return [
 
     'locales' => ['en' => 'English'],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the category model with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Category model.
+    |
+    */
+
+    'category_model' => \OptimistDigital\NovaBlog\Models\Category::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the post model with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Post model.
+    |
+    */
+
+    'post_model' => \OptimistDigital\NovaBlog\Models\Post::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the related post model with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the RelatedPost model.
+    |
+    */
+
+    'related_post_model' => \OptimistDigital\NovaBlog\Models\RelatedPost::class,
+
+
     'hide_pinned_post_option' => false,
 
     'hide_category_selector' => false,

@@ -29,11 +29,26 @@ use DigitalCreative\ConditionalContainer\HasConditionalContainer;
 class Post extends TemplateResource
 {
     use HasConditionalContainer;
-    public static $title = 'name';
-    public static $model = 'OptimistDigital\NovaBlog\Models\Post';
+
+    public static $title = 'title';
+    public static $model = null;
     public static $displayInNavigation = false;
+    public static $search = ['title', 'slug'];
 
     protected $type = 'post';
+
+    public function __construct($resource)
+    {
+        self::$model = NovaBlog::getPostModel();
+        parent::__construct($resource);
+    }
+
+    public static function newModel()
+    {
+        $model = empty(self::$model) ? NovaBlog::getPostModel() : self::$model;
+
+        return new $model;
+    }
 
     public function fields(Request $request)
     {
