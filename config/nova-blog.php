@@ -97,17 +97,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Overwrite the content preset with a custom implementation
-    |--------------------------------------------------------------------------
-    |
-    | Add a custom implementation of the Content preset.
-    |
-    */
-
-    'content_preset' => \OptimistDigital\NovaBlog\Nova\Flexible\Presets\ContentPreset::class,
-
-    /*
-    |--------------------------------------------------------------------------
     | Overwrite the related post model with a custom implementation
     |--------------------------------------------------------------------------
     |
@@ -116,6 +105,17 @@ return [
     */
 
     'related_post_model' => \OptimistDigital\NovaBlog\Models\RelatedPost::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the content preset with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Content preset.
+    |
+    */
+
+    'content_preset' => \OptimistDigital\NovaBlog\Nova\Flexible\Presets\ContentPreset::class,
 
 
     'hide_pinned_post_option' => false,
