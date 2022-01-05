@@ -97,6 +97,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Overwrite the content preset with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Content preset.
+    |
+    */
+
+    'content_preset' => \OptimistDigital\NovaBlog\Nova\Flexible\Presets\ContentPreset::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | Overwrite the related post model with a custom implementation
     |--------------------------------------------------------------------------
     |

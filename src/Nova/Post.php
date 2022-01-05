@@ -71,18 +71,7 @@ class Post extends TemplateResource
         $hideCategoryColumnInIndex = config('nova-blog.hide_category_selector') === true ? null : BelongsTo::make(__('novaBlog.category'), 'category', 'OptimistDigital\NovaBlog\Nova\Category')->nullable()->hideFromIndex();
 
         $postContent = Flexible::make(__('novaBlog.postContent'), 'post_content')->hideFromIndex()
-            ->addLayout(__('novaBlog.textSection'), 'text', [
-                config('nova-blog.use_trix') === true ? Trix::make(__('novaBlog.textContent'), 'text_content') : Markdown::make(__('novaBlog.textContent'), 'text_content'),
-            ])
-            ->addLayout(__('novaBlog.imageSection'), 'image', [
-                Image::make(__('novaBlog.image'), 'image')->deletable(false)->creationRules('required'),
-                Text::make(__('novaBlog.imageCaption'), 'caption'),
-                Text::make(__('novaBlog.imageAlt'), 'alt')
-            ])
-            ->addLayout(__('novaBlog.embedMediaSection'), 'other_media', [
-                Textarea::make(__('novaBlog.embedMediaCode'), 'media_code'),
-                Text::make(__('novaBlog.embedMediaCaption'), 'caption')
-            ])->button(__('novaBlog.addLayoutButton'));
+            ->preset(NovaBlog::getContentPreset());
 
         if (config('nova-blog.include_froala_texteditor_option')) {
             $postContent->addLayout(__('novaBlog.textSectionFroala'), 'text_froala', [

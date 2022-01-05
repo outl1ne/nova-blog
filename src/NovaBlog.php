@@ -61,6 +61,11 @@ class NovaBlog extends Tool
         return config('nova-blog.related_post_model', \OptimistDigital\NovaBlog\Models\RelatedPost::class);
     }
 
+    public static function getContentPreset(): string
+    {
+        return config('nova-blog.content_preset', \OptimistDigital\NovaBlog\Nova\Flexible\Presets\ContentPreset::class);
+    }
+
     public static function getPageUrl(Post $post)
     {
         $getPostUrl = config('nova-blog.page_url');
