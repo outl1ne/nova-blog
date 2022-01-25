@@ -104,7 +104,7 @@ class Post extends TemplateResource
                 $pagePath = $this->resource->slug;
                 $pageBaseUrl = NovaBlog::getPageUrl($this->resource);
                 $pageUrl = !empty($pageBaseUrl) ? $pageBaseUrl . $previewPart : null;
-                $buttonText = $this->resource->isDraft() ? 'View draft' : 'View';
+                $buttonText = $this->resource->isDraft() ? __('novaBlog.viewDraft') : __('novaBlog.view');
 
                 if (empty($pageBaseUrl)) return "<span class='bg-40 text-sm py-1 px-2 rounded-lg whitespace-no-wrap'>$pagePath</span>";
 
@@ -163,7 +163,7 @@ class Post extends TemplateResource
 
         if (NovaBlog::hasNovaDrafts()) {
             $fields[] = \OptimistDigital\NovaDrafts\DraftButton::make(__('novaBlog.draft'),'draft');
-            $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make(__('novaBlog.status'), 'published');
+            $fields[] = \OptimistDigital\NovaDrafts\PublishedField::make(__('novaBlog.publish'), 'published');
             $fields[] = \OptimistDigital\NovaDrafts\UnpublishButton::make(__('novaBlog.unpublish'),'Unpublish');
         }
 
@@ -198,7 +198,7 @@ class Post extends TemplateResource
 
     public function title()
     {
-        return $this->name . ' (' . $this->slug . ')';
+        return $this->title . ' (' . $this->slug . ')';
     }
 
     public static function indexQuery(NovaRequest $request, $query)

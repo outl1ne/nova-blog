@@ -36,6 +36,7 @@
   "novaBlog.locale" : "Locale",
   "novaBlog.draft" : "Draft",
   "novaBlog.status" : "Status",
+  "novaBlog.publish" : "Publish",
   "novaBlog.unpublish" : "Unpublish",
   "novaBlog.seo": "SEO",
   "novaBlog.pageData": "Page data",
