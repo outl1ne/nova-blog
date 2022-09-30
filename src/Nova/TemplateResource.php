@@ -28,7 +28,7 @@ abstract class TemplateResource extends Resource
      **/
     protected function getTemplateFieldsAndPanels(): array
     {
-        $templateClass = $this->getTemplateClass();
+        $templateClass = config('nova-blog.post_template') ?:$this->getTemplateClass();
         $templateFields = [];
         $templatePanels = [];
 
