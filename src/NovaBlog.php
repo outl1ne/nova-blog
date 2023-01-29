@@ -46,6 +46,26 @@ class NovaBlog extends Tool
         return class_exists('\OptimistDigital\NovaDrafts\DraftButton') || class_exists('\OptimistDigital\NovaDrafts\PublishedField');
     }
 
+    public static function getCategoryModel(): string
+    {
+        return config('nova-blog.category_model', \OptimistDigital\NovaBlog\Models\Category::class);
+    }
+
+    public static function getPostModel(): string
+    {
+        return config('nova-blog.post_model', \OptimistDigital\NovaBlog\Models\Post::class);
+    }
+
+    public static function getRelatedPostModel(): string
+    {
+        return config('nova-blog.related_post_model', \OptimistDigital\NovaBlog\Models\RelatedPost::class);
+    }
+
+    public static function getContentPreset(): string
+    {
+        return config('nova-blog.content_preset', \OptimistDigital\NovaBlog\Nova\Flexible\Presets\ContentPreset::class);
+    }
+
     public static function getPageUrl(Post $post)
     {
         $getPostUrl = config('nova-blog.page_url');

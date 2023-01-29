@@ -3,7 +3,7 @@
     <template slot="field">
       <input
         :class="errorClasses"
-        :id="field.name"
+        :id="field.validationKey"
         :placeholder="field.name"
         :value="value"
         @blur="onBlur"
@@ -896,7 +896,7 @@ export default {
         .replace(/-+$/, ''); // Trim - from end of text
     },
 
-    updateTitle(titleContainer) {
+    updateTitle(titleContainer,append) {
       if (this.hasTouched) return;
 
       // Codemirror's textarea doesn't contain the entire value, so we look at the div content to get the actual value
@@ -906,6 +906,8 @@ export default {
 
       if (titleElement) {
         value = titleElement.innerText;
+      } else if (titleContainer.querySelector('input[id="title'+append+'"]')) {
+        value = titleContainer.querySelector('input[id="title'+append+'"]').value;
       } else if (titleContainer.querySelector('#title')) {
         value = titleContainer.querySelector('#title').value;
       } else if (titleContainer.querySelector('.trix-content')) {
@@ -916,21 +918,35 @@ export default {
     },
 
     autoFillFromTitle() {
-      // Find the correct field based on the label
-      if (document.querySelector('label[for="title"]')) {
-        const titleContainer = document.querySelector('label[for="title"]').parentElement.parentElement;
+      var append = null;
+      if(this.field.validationKey.indexOf('.')){
+        append = this.field.validationKey.substring(this.field.validationKey.lastIndexOf('.'));  
+      }
+      
 
+      var titleContainer = null;
+      // Find the correct field based on the label
+      if (document.querySelector('label[for="title'+append+'"]')) {
+        var titleContainer = document.querySelector('label[for="title'+append+'"]').parentElement.parentElement;
+      }
+
+      if (document.querySelector('label[for="title"]')) {
+        var titleContainer = document.querySelector('label[for="title"]').parentElement.parentElement;
+      }
+
+      if(titleContainer){
         // We support titles which are markdown textareas, or titles, so we look for both
         // Codemirror creates two textareas, so we look for the one with tabindex which is the one that receives user input
         const inputElement =
           titleContainer.querySelector('textarea[tabindex="0"]') ||
+          titleContainer.querySelector('input[id="title'+append+'"]') ||
           titleContainer.querySelector('#title') ||
           titleContainer.querySelector('.trix-content');
 
         if (!inputElement) return;
 
-        inputElement.addEventListener('input', (evt) => this.updateTitle(titleContainer));
-        inputElement.addEventListener('keyup', (evt) => this.updateTitle(titleContainer));
+        inputElement.addEventListener('input', (evt) => this.updateTitle(titleContainer, append));
+        inputElement.addEventListener('keyup', (evt) => this.updateTitle(titleContainer, append));
       }
     },
   },

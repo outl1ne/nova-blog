@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use OptimistDigital\NovaBlog\Nova\Fields\Slug;
+use OptimistDigital\NovaBlog\NovaBlog;
 use OptimistDigital\NovaSortable\Traits\HasSortableRows;
 
 class Category extends TemplateResource
@@ -13,28 +14,22 @@ class Category extends TemplateResource
     use HasSortableRows;
 
     public static $displayInNavigation = false;
-    /**
-     * The model the resource corresponds to.
-     *
-     * @var string
-     */
-    public static $model = 'OptimistDigital\NovaBlog\Models\Category';
-
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
+    public static $model = null;
     public static $title = 'title';
+    public static $search = ['id','title','slug'];
 
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-        'id',
-    ];
+    public function __construct($resource)
+    {
+        self::$model = NovaBlog::getCategoryModel();
+        parent::__construct($resource);
+    }
+
+    public static function newModel()
+    {
+        $model = empty(self::$model) ? NovaBlog::getCategoryModel() : self::$model;
+
+        return new $model;
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -46,8 +41,8 @@ class Category extends TemplateResource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title', 'title'),
-            Slug::make('Slug', 'slug')->rules('required', 'alpha_dash_or_slash'),
+            Text::make(__('novaBlog.title'), 'title')->translatable(),
+            Slug::make(__('novaBlog.slug'), 'slug')->rules('required', 'alpha_dash_or_slash')->translatable(),
         ];
     }
 
@@ -93,5 +88,15 @@ class Category extends TemplateResource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function label()
+    {
+        return __('novaBlog.categories');
+    }
+
+    public static function singularLabel()
+    {
+        return __('novaBlog.category');
     }
 }

@@ -16,7 +16,7 @@ class AddSortOrderToCategory extends Migration
     {
         $categoriesTable = config('nova-blog.blog_categories_table', 'nova_blog_categories');
         Schema::table($categoriesTable, function (Blueprint $table) {
-            $table->integer('sort_order');
+            $table->integer('sort_order')->after('slug');
         });
 
         DB::statement("UPDATE $categoriesTable SET sort_order = id");

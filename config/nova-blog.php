@@ -15,6 +15,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Related posts table name
+    |--------------------------------------------------------------------------
+    |
+    | Set a custom table for Nova Blog to store its posts data.
+    |
+    */
+
+    'blog_related_posts_table' => 'nova_blog_related_posts',
+
+    /*
+    |--------------------------------------------------------------------------
     | Categories table name
     |--------------------------------------------------------------------------
     |
@@ -62,6 +73,51 @@ return [
 
     'locales' => ['en' => 'English'],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the category model with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Category model.
+    |
+    */
+
+    'category_model' => \OptimistDigital\NovaBlog\Models\Category::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the post model with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Post model.
+    |
+    */
+
+    'post_model' => \OptimistDigital\NovaBlog\Models\Post::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the related post model with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the RelatedPost model.
+    |
+    */
+
+    'related_post_model' => \OptimistDigital\NovaBlog\Models\RelatedPost::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Overwrite the content preset with a custom implementation
+    |--------------------------------------------------------------------------
+    |
+    | Add a custom implementation of the Content preset.
+    |
+    */
+
+    'content_preset' => \OptimistDigital\NovaBlog\Nova\Flexible\Presets\ContentPreset::class,
+
+
     'hide_pinned_post_option' => false,
 
     'hide_category_selector' => false,
@@ -80,8 +136,6 @@ return [
 
     'hide_related_posts_column_from_index' => false,
 
-    'hide_locale_column_from_index' => false,
-
-    'navigation_title' => 'Blog',
+    'hide_locale_column_from_index' => false
 
 ];

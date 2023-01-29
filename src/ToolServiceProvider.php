@@ -7,9 +7,11 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
 use OptimistDigital\NovaBlog\Nova\Category;
 use OptimistDigital\NovaBlog\Nova\Post;
+use OptimistDigital\NovaTranslationsLoader\LoadsNovaTranslations;
 
 class ToolServiceProvider extends ServiceProvider
 {
+    use LoadsNovaTranslations;
     /**
      * Bootstrap any application services.
      *
@@ -20,6 +22,8 @@ class ToolServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-blog');
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        $this->loadTranslations(__DIR__ . '/../resources/lang', 'nova-blog', true);
 
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
