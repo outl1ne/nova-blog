@@ -32,7 +32,9 @@
     "laravel/nova": "^3.0",
     "optimistdigital/nova-locale-field": "^2.0",
     "whitecube/nova-flexible-content": "^0.2.4",
-    "optimistdigital/nova-multiselect-field": "^2.0.6"
+    "outl1ne/nova-multiselect-field": ">=1.8.1",
+    "digital-creative/conditional-container": "*",
+    "outl1ne/nova-sortable": "^3.0"
   },
   "autoload": {
     "psr-4": {
@@ -54,10 +56,14 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
+  "repositories": {
+    "nova": {
       "type": "composer",
       "url": "https://nova.laravel.com"
+    },
+    "conditional-container": {
+        "type": "vcs",
+        "url": "git@github.com:chriswest101/conditional-container.git"
     }
-  ]
+  }
 }
