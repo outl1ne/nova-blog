@@ -31,9 +31,9 @@
     "doctrine/dbal": "^2.9",
     "optimistdigital/nova-locale-field": "^2.0",
     "whitecube/nova-flexible-content": "^0.2.4",
-    "optimistdigital/nova-multiselect-field": ">=1.8.1",
-    "digital-creative/conditional-container": "^1.3",
-    "optimistdigital/nova-sortable": "^2.3.4"
+    "outl1ne/nova-multiselect-field": ">=1.8.1",
+    "digital-creative/conditional-container": "*",
+    "outl1ne/nova-sortable": "^3.0"
   },
   "autoload": {
     "psr-4": {
@@ -54,5 +54,15 @@
     "sort-packages": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": {
+    "nova": {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    },
+    "conditional-container": {
+        "type": "vcs",
+        "url": "git@github.com:chriswest101/conditional-container.git"
+    }
+  }
 }
