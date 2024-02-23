@@ -23,7 +23,7 @@ use OptimistDigital\NovaBlog\Nova\Fields\Slug;
 use OptimistDigital\NovaBlog\Nova\Fields\Title;
 use OptimistDigital\NovaLocaleField\LocaleField;
 use OptimistDigital\NovaBlog\Models\RelatedPost;
-use OptimistDigital\MultiselectField\Multiselect;
+use Outl1ne\MultiselectField\Multiselect;
 use DigitalCreative\ConditionalContainer\ConditionalContainer;
 use DigitalCreative\ConditionalContainer\HasConditionalContainer;
 
