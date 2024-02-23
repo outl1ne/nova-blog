@@ -29,6 +29,7 @@
   "require": {
     "php": ">=7.1.0",
     "doctrine/dbal": "^2.9",
+    "laravel/nova": "^3.0",
     "optimistdigital/nova-locale-field": "^2.0",
     "whitecube/nova-flexible-content": "^0.2.4",
     "outl1ne/nova-multiselect-field": ">=1.8.1",
